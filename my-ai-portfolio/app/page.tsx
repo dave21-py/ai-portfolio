@@ -5,7 +5,8 @@ import { FaGithub, FaRegSmile, FaBriefcase, FaLayerGroup, FaMagic, FaUserFriends
 import { useState } from 'react';
 import Modal from './Modal'; // The Modal component
 import Skills from './Skills'; // The Skills component
-import FunModal from './Fun'; // Import the FunModal component
+import FunModal from './Fun'; // The FunModal component
+import ContactModal from './Contact'; // The ContactModal component
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 
@@ -13,28 +14,33 @@ import { motion } from 'framer-motion';
 const FluidCanvas = dynamic(() => import('./FluidCanvas'), { ssr: false });
 
 export default function Home() {
-  const [isModalOpen, setIsModalOpen] = useState(false); // Set to false initially
-  const [isSkillsModalOpen, setIsSkillsModalOpen] = useState(false); // New state for Skills Modal
-  const [isFunModalOpen, setIsFunModalOpen] = useState(false); // New state for Fun Modal
+  const [isModalOpen, setIsModalOpen] = useState(false); // State for 'Me' Modal
+  const [isSkillsModalOpen, setIsSkillsModalOpen] = useState(false); // State for 'Skills' Modal
+  const [isFunModalOpen, setIsFunModalOpen] = useState(false); // State for 'Fun' Modal
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false); // State for 'Contact' Modal
 
-  // Functions to open and close the modal
+  // Functions to open and close the 'Me' Modal
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
-  // Functions to open and close the Skills modal
+  // Functions to open and close the 'Skills' Modal
   const openSkillsModal = () => setIsSkillsModalOpen(true);
   const closeSkillsModal = () => setIsSkillsModalOpen(false);
 
-  // Functions to open and close the Fun modal
+  // Functions to open and close the 'Fun' Modal
   const openFunModal = () => setIsFunModalOpen(true);
   const closeFunModal = () => setIsFunModalOpen(false);
+
+  // Functions to open and close the 'Contact' Modal
+  const openContactModal = () => setIsContactModalOpen(true);
+  const closeContactModal = () => setIsContactModalOpen(false);
 
   const navButtons = [
     { text: 'Me', Icon: FaRegSmile, color: 'text-teal-500', onClick: openModal },
     { text: 'Projects', Icon: FaBriefcase, color: 'text-green-500' },
     { text: 'Skills', Icon: FaLayerGroup, color: 'text-purple-500', onClick: openSkillsModal },
-    { text: 'Fun', Icon: FaMagic, color: 'text-pink-500', onClick: openFunModal }, // Pass openFunModal here
-    { text: 'Contact', Icon: FaUserFriends, color: 'text-yellow-600' },
+    { text: 'Fun', Icon: FaMagic, color: 'text-pink-500', onClick: openFunModal },
+    { text: 'Contact', Icon: FaUserFriends, color: 'text-yellow-600', onClick: openContactModal }, // Trigger Contact Modal on click
   ];
 
   const topElementVariants = {
@@ -58,7 +64,7 @@ export default function Home() {
         initial="hidden"
         animate="visible"
       >
-        <div className="text-center mt-4 bg-white-800/80 backdrop-blur-lg rounded-xl p-4 z-30 relative opacity-100 transition-opacity duration-1000 ease-in-out">
+        <div className="text-center mt-30 bg-white-800/80 backdrop-blur-lg rounded-xl p-4 z-30 relative opacity-100 transition-opacity duration-1000 ease-in-out">
           <p className="text-black text-lg opacity-100">Hey, I'm David 👋</p>
           <h1 className="text-5xl font-bold text-black mt-2 opacity-100">Welcome to my Portfolio</h1>
           <Image
@@ -69,6 +75,7 @@ export default function Home() {
             className="mt-6 mx-auto opacity-100 z-40 relative"
           />
         </div>
+
       </motion.div>
 
       {/* GitHub Button */}
@@ -86,7 +93,7 @@ export default function Home() {
         {navButtons.map((button) => (
           <button
             key={button.text}
-            onClick={button.onClick} // Ensure that click opens the respective modal
+            onClick={button.onClick} // Ensure the right modal is opened
             className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl shadow-sm p-3 w-24 h-20 flex flex-col items-center justify-center gap-1 transition-all hover:shadow-lg hover:shadow-[0_0_15px_rgba(255,255,255,0.2)] hover:-translate-y-1 text-sm mix-blend-screen"
           >
             <button.Icon size={20} className={button.color} />
@@ -102,7 +109,10 @@ export default function Home() {
       {isSkillsModalOpen && <Skills onClose={closeSkillsModal} />}
 
       {/* Modal for 'Fun' */}
-      {isFunModalOpen && <FunModal onClose={closeFunModal} />} {/* Only render the FunModal when it's open */}
+      {isFunModalOpen && <FunModal onClose={closeFunModal} />}
+
+      {/* Modal for 'Contact' */}
+      {isContactModalOpen && <ContactModal onClose={closeContactModal} />} {/* Only render the Contact Modal when it's open */}
     </div>
   );
 }
