@@ -3,7 +3,8 @@
 import dynamic from 'next/dynamic';
 import { FaGithub, FaRegSmile, FaBriefcase, FaLayerGroup, FaMagic, FaUserFriends } from 'react-icons/fa';
 import { useState } from 'react';
-import Modal from './Modal'; // Use the Modal component here
+import Modal from './Modal'; // The Modal component
+import Skills from './Skills'; // Import the Skills component (formerly SkillsModal)
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 
@@ -12,15 +13,20 @@ const FluidCanvas = dynamic(() => import('./FluidCanvas'), { ssr: false });
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false); // Set to false initially
+  const [isSkillsModalOpen, setIsSkillsModalOpen] = useState(false); // New state for Skills Modal
 
   // Functions to open and close the modal
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
+  // Functions to open and close the Skills modal
+  const openSkillsModal = () => setIsSkillsModalOpen(true);
+  const closeSkillsModal = () => setIsSkillsModalOpen(false);
+
   const navButtons = [
-    { text: 'Me', Icon: FaRegSmile, color: 'text-teal-500', onClick: openModal }, // Pass openModal here
+    { text: 'Me', Icon: FaRegSmile, color: 'text-teal-500', onClick: openModal },
     { text: 'Projects', Icon: FaBriefcase, color: 'text-green-500' },
-    { text: 'Skills', Icon: FaLayerGroup, color: 'text-purple-500' },
+    { text: 'Skills', Icon: FaLayerGroup, color: 'text-purple-500', onClick: openSkillsModal }, // Pass openSkillsModal here
     { text: 'Fun', Icon: FaMagic, color: 'text-pink-500' },
     { text: 'Contact', Icon: FaUserFriends, color: 'text-yellow-600' },
   ];
@@ -74,7 +80,7 @@ export default function Home() {
         {navButtons.map((button) => (
           <button
             key={button.text}
-            onClick={button.onClick} // Ensure that click opens the modal
+            onClick={button.onClick} // Ensure that click opens the respective modal
             className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl shadow-sm p-3 w-24 h-20 flex flex-col items-center justify-center gap-1 transition-all hover:shadow-lg hover:shadow-[0_0_15px_rgba(255,255,255,0.2)] hover:-translate-y-1 text-sm mix-blend-screen"
           >
             <button.Icon size={20} className={button.color} />
@@ -83,8 +89,11 @@ export default function Home() {
         ))}
       </nav>
 
-      {/* Modal */}
-      {isModalOpen && <Modal onClose={closeModal} />} {/* Only render the Modal when it's open */}
+      {/* Modal for 'Me' */}
+      {isModalOpen && <Modal onClose={closeModal} />}
+
+      {/* Modal for 'Skills' */}
+      {isSkillsModalOpen && <Skills onClose={closeSkillsModal} />} {/* Only render the Skills component when it's open */}
     </div>
   );
 }
