@@ -1,34 +1,61 @@
 'use client';
 
 import dynamic from 'next/dynamic';
+import { FaGithub } from 'react-icons/fa';
 
+// Dynamically import the FluidCanvas component
 const FluidCanvas = dynamic(
-  () => import('./FluidCanvas'), // The path to your component
-  { ssr: false } // The magic option!
+  () => import('./FluidCanvas'),
+  { ssr: false }
 );
 
 export default function Home() {
   return (
-    // The main container. We set the background color here.
-    <div className="relative min-h-screen bg-white flex items-center justify-center overflow-hidden">
-      
-      {/* The Fluid Canvas is now our background */}
+    <div className="relative min-h-screen bg-white overflow-hidden">
+      {/* The Fluid Canvas is our background, at z-0 */}
       <FluidCanvas />
 
-      {/* 
-        Main content. 
-        It MUST have a higher z-index than the canvas to appear on top.
-        The text color is changed to be dark for contrast.
-      */}
-      <div className="relative z-10 text-center">
-        <h1 className="text-5xl font-bold text-gray-800">Hey, I'm David 👋</h1>
-        <p className="text-xl mt-4 text-gray-600">Welcome to my AI Portfolio</p>
-      </div>
+      {/* Header, sitting on top at z-20 */}
+      <header className="absolute top-0 left-0 right-0 p-6 z-20 flex items-center justify-between">
+        {/* Left Side Spacer */}
+        <div className="w-24"></div>
 
-      {/* Footer also needs a higher z-index */}
+        {/* Center Content */}
+        <div className="flex flex-col items-center gap-4">
+          {/* Logo - Simplified to 'X' to match your image */}
+          <div className="bg-white p-3 rounded-lg shadow-md flex items-center justify-center w-10 h-10 font-bold text-lg">
+            X
+          </div>
+          {/* Text */}
+          <div className="text-center">
+            <p className="text-gray-700">Hey, I'm David 👋</p>
+            <h1 className="text-6xl font-bold text-gray-900">AI portfolio</h1>
+          </div>
+        </div>
+
+        {/* Right Side - GitHub Button */}
+        <a 
+          // Replace with your actual GitHub link!
+          href="https://github.com/dave21-py" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="bg-black text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-transform hover:scale-105"
+        >
+          <FaGithub />
+        </a>
+      </header>
+
+      {/* 
+        --- THIS IS THE FIX ---
+        We have removed the main content div that was covering the canvas.
+        The space between the header and footer is now empty,
+        allowing the FluidCanvas to be visible.
+      */}
+
+      {/* Footer, sitting on top at z-10 */}
       <footer className="absolute bottom-8 text-center w-full z-10">
         <a
-          href="https://github.com/dave21-py/ai-portfolio"
+          href="https://github.com/dave21-py" // Also update this link
           className="text-sm text-gray-700 underline"
           target="_blank"
           rel="noopener noreferrer"
