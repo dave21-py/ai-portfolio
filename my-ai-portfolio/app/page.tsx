@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic';
 import { FaGithub } from 'react-icons/fa';
 import { useState } from 'react';
 import WelcomeModal from './WelcomeModal';
+import Image from 'next/image';
 
 
 // Dynamically import the FluidCanvas component
@@ -43,6 +44,14 @@ export default function Home() {
           <div className="text-center">
             <p className="text-gray-700">Hey, I'm David 👋</p>
             <h1 className="text-6xl font-bold text-gray-900">Welcome to my Portfolio</h1>
+            {/* ==> ADD THIS IMAGE COMPONENT <== */}
+            <Image
+              src="/memoji.png" // The path from the 'public' folder
+              alt="David's Memoji"
+              width={130} // The actual width of the image
+              height={130} // The actual height of the image
+              className="mt-6 mx-auto" // Adds spacing above and centers it
+            />
           </div>
         </div>
 
