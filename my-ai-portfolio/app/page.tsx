@@ -4,7 +4,8 @@ import dynamic from 'next/dynamic';
 import { FaGithub, FaRegSmile, FaBriefcase, FaLayerGroup, FaMagic, FaUserFriends } from 'react-icons/fa';
 import { useState } from 'react';
 import Modal from './Modal'; // The Modal component
-import Skills from './Skills'; // Import the Skills component (formerly SkillsModal)
+import Skills from './Skills'; // The Skills component
+import FunModal from './Fun'; // Import the FunModal component
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 
@@ -14,6 +15,7 @@ const FluidCanvas = dynamic(() => import('./FluidCanvas'), { ssr: false });
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false); // Set to false initially
   const [isSkillsModalOpen, setIsSkillsModalOpen] = useState(false); // New state for Skills Modal
+  const [isFunModalOpen, setIsFunModalOpen] = useState(false); // New state for Fun Modal
 
   // Functions to open and close the modal
   const openModal = () => setIsModalOpen(true);
@@ -23,11 +25,15 @@ export default function Home() {
   const openSkillsModal = () => setIsSkillsModalOpen(true);
   const closeSkillsModal = () => setIsSkillsModalOpen(false);
 
+  // Functions to open and close the Fun modal
+  const openFunModal = () => setIsFunModalOpen(true);
+  const closeFunModal = () => setIsFunModalOpen(false);
+
   const navButtons = [
     { text: 'Me', Icon: FaRegSmile, color: 'text-teal-500', onClick: openModal },
     { text: 'Projects', Icon: FaBriefcase, color: 'text-green-500' },
-    { text: 'Skills', Icon: FaLayerGroup, color: 'text-purple-500', onClick: openSkillsModal }, // Pass openSkillsModal here
-    { text: 'Fun', Icon: FaMagic, color: 'text-pink-500' },
+    { text: 'Skills', Icon: FaLayerGroup, color: 'text-purple-500', onClick: openSkillsModal },
+    { text: 'Fun', Icon: FaMagic, color: 'text-pink-500', onClick: openFunModal }, // Pass openFunModal here
     { text: 'Contact', Icon: FaUserFriends, color: 'text-yellow-600' },
   ];
 
@@ -93,7 +99,10 @@ export default function Home() {
       {isModalOpen && <Modal onClose={closeModal} />}
 
       {/* Modal for 'Skills' */}
-      {isSkillsModalOpen && <Skills onClose={closeSkillsModal} />} {/* Only render the Skills component when it's open */}
+      {isSkillsModalOpen && <Skills onClose={closeSkillsModal} />}
+
+      {/* Modal for 'Fun' */}
+      {isFunModalOpen && <FunModal onClose={closeFunModal} />} {/* Only render the FunModal when it's open */}
     </div>
   );
 }
