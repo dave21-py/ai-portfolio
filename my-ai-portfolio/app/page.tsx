@@ -2,6 +2,9 @@
 
 import dynamic from 'next/dynamic';
 import { FaGithub } from 'react-icons/fa';
+import { useState } from 'react';
+import WelcomeModal from './WelcomeModal';
+
 
 // Dynamically import the FluidCanvas component
 const FluidCanvas = dynamic(
@@ -10,6 +13,13 @@ const FluidCanvas = dynamic(
 );
 
 export default function Home() {
+    // State to track if the modal is open or closed.
+  // It starts as 'true' to show on first page load.
+  const [isModalOpen, setIsModalOpen] = useState(true);
+
+  // Functions to open and close the modal
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
   return (
     <div className="relative min-h-screen bg-white overflow-hidden">
       {/* The Fluid Canvas is our background, at z-0 */}
@@ -23,13 +33,16 @@ export default function Home() {
         {/* Center Content */}
         <div className="flex flex-col items-center gap-4">
           {/* Logo - Simplified to 'X' to match your image */}
-          <div className="bg-white p-3 rounded-lg shadow-md flex items-center justify-center w-10 h-10 font-bold text-lg">
-            X
-          </div>
+          <button
+            onClick={openModal}
+            className="bg-white p-3 rounded-lg shadow-md flex items-center justify-center w-10 h-10 font-bold text-lg transition-transform hover:scale-110"
+          >
+            ❔
+          </button>
           {/* Text */}
           <div className="text-center">
             <p className="text-gray-700">Hey, I'm David 👋</p>
-            <h1 className="text-6xl font-bold text-gray-900">AI portfolio</h1>
+            <h1 className="text-6xl font-bold text-gray-900">Welcome to my Portfolio</h1>
           </div>
         </div>
 
@@ -63,6 +76,9 @@ export default function Home() {
           View source on GitHub
         </a>
       </footer>
+      {/* RENDER THE MODAL COMPONENT */}
+      {/* It will only be visible if 'isModalOpen' is true */}
+      <WelcomeModal isOpen={isModalOpen} onClose={closeModal} />
     </div>
   );
 }
