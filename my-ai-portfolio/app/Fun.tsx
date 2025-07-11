@@ -12,7 +12,7 @@ const FunModal = ({ onClose }) => {
     >
       {/* Modal Panel */}
       <div
-        className="bg-gray-900/75 backdrop-blur-sm rounded-2xl shadow-2xl max-w-2xl w-full relative overflow-y-auto max-h-[90vh]"
+        className="bg-white/10 backdrop-blur-sm rounded-2xl shadow-2xl max-w-2xl w-full relative overflow-y-auto max-h-[90vh]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}

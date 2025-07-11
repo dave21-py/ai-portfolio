@@ -38,7 +38,7 @@ const SkillsModal = ({ onClose }) => {
     >
       {/* The Modal Panel */}
       <div
-        className="bg-gray-900/75 backdrop-blur-sm rounded-2xl shadow-2xl max-w-4xl w-full relative overflow-y-auto max-h-[90vh]"
+        className="bg-white/10 backdrop-blur-sm rounded-2xl shadow-2xl max-w-4xl w-full relative overflow-y-auto max-h-[90vh]"
         onClick={(e) => e.stopPropagation()} // Prevents modal from closing when clicking inside
       >
         {/* Close Button */}

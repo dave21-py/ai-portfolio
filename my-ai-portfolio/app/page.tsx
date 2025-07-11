@@ -12,6 +12,7 @@ import {
 } from 'react-icons/fa';
 import { useState } from 'react';
 import Modal from './Modal';
+import ProjectsModal from './Projects';
 import Skills from './Skills';
 import FunModal from './Fun';
 import ContactModal from './Contact';
@@ -67,7 +68,7 @@ export default function Home() {
   initial="hidden"
   animate="visible"
 >
-  <div className="bg-gray-900/80 backdrop-blur-lg rounded-xl p-4 relative">
+  <div className="bg-white/10 backdrop-blur-lg rounded-xl p-4 relative">
     <p className="text-gray text-lg">Hey, I'm David 👋</p>
     <h1 className="text-5xl font-bold text-gray mt-2">
       Welcome to my Portfolio
@@ -119,7 +120,10 @@ export default function Home() {
       {isFunModalOpen && <FunModal onClose={() => setIsFunModalOpen(false)} />}
       {isContactModalOpen && <ContactModal onClose={() => setIsContactModalOpen(false)} />}
       {isModalOpen && <Modal onClose={() => setIsModalOpen(false)} />}
-      {isProjectsModalOpen && <Modal onClose={() => setIsProjectsModalOpen(false)} />}
+      {isProjectsModalOpen && (
+  <ProjectsModal onClose={() => setIsProjectsModalOpen(false)} />
+)}
+
     </div>
   );
 }

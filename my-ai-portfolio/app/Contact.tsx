@@ -20,7 +20,7 @@ const ContactModal = ({ onClose }) => {
     >
       {/* Modal Panel - We use a light gray background to match the screenshot */}
       <div
-        className="bg-gray-900/75 backdrop-blur-sm rounded-2xl shadow-2xl max-w-lg w-full relative"
+        className="bg-white/10 backdrop-blur-sm rounded-2xl shadow-2xl max-w-lg w-full relative"
         onClick={(e) => e.stopPropagation()}
       >
         {/* We don't need an explicit close button if it's not in the design, but let's keep it for accessibility */}
