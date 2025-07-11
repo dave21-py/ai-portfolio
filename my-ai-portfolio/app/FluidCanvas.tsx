@@ -1,43 +1,52 @@
+// app/FluidCanvas.tsx
 'use client';
 
 import { useEffect, useRef } from 'react';
 import webglFluid from 'webgl-fluid';
 
 const FluidCanvas = () => {
-  const canvasRef = useRef(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (canvas) {
-      // Initialize the fluid simulation
-      // You can play with these config values to get different effects
-      webglFluid(canvas, {
-        IMPRESS: 0.8,
-        PRESSURE: 0.8,
-        CURL: 10, // Creates more detailed, smaller swirls
-        SPLAT_RADIUS: 0.3, // The radius of the "splat" when you move the mouse
-        SPLAT_FORCE: 6000,
-        SHADING: true,
-        COLORFUL: true,
-        COLOR_UPDATE_SPEED: 10,
-        PAUSED: false,
-        BACK_COLOR: { r: 255, g: 255, b: 255 }, // Match your page's background
-        TRANSPARENT: false, // Set to true if you want to see content behind it
-        DENSITY_DISSIPATION: 1.2, // How quickly the "ink" fades
-        VELOCITY_DISSIPATION: 0.3, // How quickly the motion settles
-        BLOOM: false,
-        SUNRAYS: false,
-      });
-    }
+    if (!canvas) return;
 
-    // No cleanup function is provided by the library,
-    // and it attaches listeners to the window, so it will persist.
-  }, []); // The empty dependency array ensures this runs only once on mount.
+    webglFluid(canvas, {
+      IMPRESS: 0.8,
+      PRESSURE: 0.8,
+      CURL: 20,
+      SPLAT_RADIUS: 0.35,
+      SPLAT_FORCE: 6000,
+      SHADING: true,
+      COLORFUL: true,
+      COLOR_UPDATE_SPEED: 10,
+      PAUSED: false,
+
+      // make the canvas opaque white
+      TRANSPARENT: false,
+      BACKGROUND_COLOR: { r: 1, g: 1, b: 1 },
+
+      // lighter bloom & no sunrays for performance
+      BLOOM: true,
+      BLOOM_ITERATIONS: 4,
+      BLOOM_RESOLUTION: 128,
+      SUNRAYS: false,
+
+      // downsample simulation textures
+      TEXTURE_DOWNSAMPLE: 2,
+      DYE_RESOLUTION: 512,
+      VELOCITY_RESOLUTION: 512,
+
+      // smoother dissipation
+      DENSITY_DISSIPATION: 1.2,
+      VELOCITY_DISSIPATION: 0.5,
+    });
+  }, []);
 
   return (
-    <canvas 
-      ref={canvasRef} 
-      className="absolute top-0 left-0 w-full h-full z-0" 
+    <canvas
+      ref={canvasRef}
+      className="fluid-canvas absolute inset-0 w-full h-full z-0"
     />
   );
 };

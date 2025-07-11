@@ -38,7 +38,7 @@ const SkillsModal = ({ onClose }) => {
     >
       {/* The Modal Panel */}
       <div
-        className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full relative overflow-y-auto max-h-[90vh]"
+        className="bg-gray-900/75 backdrop-blur-sm rounded-2xl shadow-2xl max-w-4xl w-full relative overflow-y-auto max-h-[90vh]"
         onClick={(e) => e.stopPropagation()} // Prevents modal from closing when clicking inside
       >
         {/* Close Button */}
@@ -51,13 +51,13 @@ const SkillsModal = ({ onClose }) => {
 
         {/* Modal Content */}
         <div className="p-8 md:p-12">
-          <h2 className="text-4xl font-bold text-gray-900 mb-10">Skills & Expertise</h2>
+          <h2 className="text-4xl font-bold text-white-900 mb-10">Skills & Expertise</h2>
 
           <div className="space-y-10">
             {/* We loop through our data to create each section */}
             {skillsData.map((category) => (
               <div key={category.title}>
-                <h3 className="flex items-center gap-3 text-xl font-semibold text-gray-800">
+                <h3 className="flex items-center gap-3 text-xl font-semibold text-white-800">
                   <category.Icon />
                   {category.title}
                 </h3>

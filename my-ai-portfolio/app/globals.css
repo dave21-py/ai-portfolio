@@ -1,3 +1,4 @@
+/* app/globals.css */
 @import "tailwindcss";
 
 :root {
@@ -24,3 +25,18 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* ensure the fluid canvas always uses your background var */
+.fluid-canvas {
+  background-color: var(--background);
+}
+
+/* 
+   If you’d rather force a white backdrop even in dark mode, uncomment:
+
+@media (prefers-color-scheme: dark) {
+  .fluid-canvas {
+    background-color: #ffffff !important;
+  }
+}
+*/

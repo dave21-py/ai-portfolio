@@ -20,7 +20,7 @@ const ContactModal = ({ onClose }) => {
     >
       {/* Modal Panel - We use a light gray background to match the screenshot */}
       <div
-        className="bg-gray-50 rounded-2xl shadow-2xl max-w-lg w-full relative"
+        className="bg-gray-900/75 backdrop-blur-sm rounded-2xl shadow-2xl max-w-lg w-full relative"
         onClick={(e) => e.stopPropagation()}
       >
         {/* We don't need an explicit close button if it's not in the design, but let's keep it for accessibility */}
@@ -36,7 +36,7 @@ const ContactModal = ({ onClose }) => {
           
           {/* Top Row: Title and Handle */}
           <div className="flex justify-between items-center">
-            <h2 className="text-3xl font-bold text-gray-900">Contacts</h2>
+            <h2 className="text-3xl font-bold text-white-900">Contacts</h2>
             <p className="text-gray-600">@David.Geddam</p>
           </div>
 
@@ -60,7 +60,7 @@ const ContactModal = ({ onClose }) => {
                   href={link.href} 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="text-gray-500 hover:text-gray-900 text-sm font-medium transition-colors"
+                  className="text-gray-500 hover:text-cyan-900 text-sm font-medium transition-colors"
                 >
                   {link.name}
                 </a>

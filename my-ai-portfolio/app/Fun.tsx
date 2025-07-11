@@ -12,7 +12,7 @@ const FunModal = ({ onClose }) => {
     >
       {/* Modal Panel */}
       <div
-        className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full relative overflow-y-auto max-h-[90vh]"
+        className="bg-gray-900/75 backdrop-blur-sm rounded-2xl shadow-2xl max-w-2xl w-full relative overflow-y-auto max-h-[90vh]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}
@@ -26,7 +26,7 @@ const FunModal = ({ onClose }) => {
         {/* Modal Content */}
         <div className="p-8 md:p-10">
           {/* First Post: San Francisco */}
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900">San Fransisco (2024)</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-white-900">San Fransisco (2024)</h2>
 
           {/* Image Container with Overlay */}
           <div className="relative mt-6 rounded-2xl overflow-hidden shadow-lg">
@@ -42,7 +42,7 @@ const FunModal = ({ onClose }) => {
           </div>
 
           {/* Text Content Below Image */}
-          <div className="mt-8 space-y-4 text-gray-700 leading-relaxed">
+          <div className="mt-8 space-y-4 text-gray-500 leading-relaxed">
             <p>
               There are a lot of things I did while traveling to SF for the first time. Visiting the Golden Gate Bridge, Tech Companies like NVIDIA, and Meta, as well as restaurants and beaches. It was a wild and fun experience for me.
             </p>
@@ -51,8 +51,8 @@ const FunModal = ({ onClose }) => {
             </p>
           </div>
 
-          {/* Second Post: Paris */}
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mt-12">Gym</h2>
+          {/* Second Post: Gym */}
+          <h2 className="text-3xl md:text-4xl font-bold text-white-900 mt-12">Gym</h2>
 
           {/* Image Container with Overlay for Paris */}
           <div className="relative mt-6 rounded-2xl overflow-hidden shadow-lg">
@@ -68,7 +68,7 @@ const FunModal = ({ onClose }) => {
           </div>
 
           {/* Text Content Below Image for Paris */}
-          <div className="mt-8 space-y-4 text-gray-700 leading-relaxed">
+          <div className="mt-8 space-y-4 text-gray-500 leading-relaxed">
             <p>
               Like i said, working is one of my favorite hobbies. It taught me discipline, allowed me to take care of my physical health.
             </p>

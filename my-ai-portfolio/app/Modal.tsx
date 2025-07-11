@@ -15,7 +15,7 @@ const Modal = ({ onClose }) => {
     >
       {/* The Modal Panel */}
       <div
-        className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full relative overflow-y-auto max-h-[90vh]"
+        className="bg-gray-900/75 backdrop-blur-sm rounded-2xl shadow-2xl max-w-4xl w-full relative overflow-y-auto max-h-[90vh]"
         onClick={(e) => e.stopPropagation()} // Prevents modal from closing when clicking inside
       >
         {/* Close Button */}
@@ -41,11 +41,11 @@ const Modal = ({ onClose }) => {
 
             {/* Right Column: Info */}
             <div className="md:col-span-2 flex flex-col justify-center">
-              <h2 className="text-4xl font-bold text-gray-900">David M. Geddam</h2>
+              <h2 className="text-4xl font-bold text-white-900">David M. Geddam</h2>
               <p className="text-gray-500 mt-2">
                 19 years old <span className="mx-2">•</span> Greenville, SC
               </p>
-              <p className="mt-6 text-gray-700 leading-relaxed">
+              <p className="mt-6 text-gray-500 leading-relaxed">
                 Hey 👋
                 <br />
                 I'm David, a Computer Engineering Student. I'm passionate about AI and deep learning.
@@ -64,7 +64,7 @@ const Modal = ({ onClose }) => {
 
           {/* Bottom Section: Full-width paragraph */}
           <div className="px-6 md:px-10 pb-6">
-            <p className="text-gray-600 leading-relaxed">
+            <p className="text-gray-500 leading-relaxed">
               I'm an aspiring Generative AI / Prompt / LLM Engineer currently pursuing a B.S. in Computer Engineering at Bob Jones University. Over the past few years, I’ve explored a variety of fields, including web development, GUI applications, object-oriented programming, and artificial intelligence. Among these, I found myself especially drawn to AI and Deep Learning, areas that fascinate me because of their potential to solve complex problems and make a meaningful impact on the world.
 
 As of 2025, I’ve gained experience in Java, including object-oriented programming and GUI development using JavaFX, and I’m currently learning Python for ML and the fundamentals of LLMs. I’m passionate about leveraging the power of text, image, and video data generation and aspire to build intelligent systems that are both innovative and impactful.
