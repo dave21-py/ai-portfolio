@@ -13,6 +13,7 @@ import FunModal from './Fun';
 import ContactModal from './Contact';
 import ResumeModal from './ResumeModal';
 import ProjectsModal from './Projects';
+import CertificateModal from './Certificate';
 
 // disable SSR for WebGL and cursor components
 const FluidCanvas = dynamic(() => import('./FluidCanvas'), { ssr: false });
@@ -25,6 +26,8 @@ export default function Home() {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [isResumeModalOpen, setIsResumeModalOpen] = useState(false);
   const [isProjectsModalOpen, setIsProjectsModalOpen] = useState(false);
+  const [isCertModalOpen, setIsCertModalOpen] = useState(false);
+
 
   const handleAction = (action: string) => {
     switch (action) {
@@ -45,6 +48,9 @@ export default function Home() {
         break;
       case 'showFun':
         setIsFunModalOpen(true);
+        break;
+      case 'showCertificates':
+        setIsCertModalOpen(true);
         break;
       default:
         // fallback to “Me” if nothing matches
@@ -71,7 +77,7 @@ export default function Home() {
         <div className="bg-white/10 backdrop-blur-lg rounded-xl p-4 relative">
           <p className="text-white text-lg">Hey, I’m David 👋</p>
           <h1 className="text-5xl font-bold text-white mt-4">
-            Welcome to my Portfolio
+            Welcome to my AI Portfolio
           </h1>
           <Image
             src="/memoji.png"
@@ -143,6 +149,8 @@ export default function Home() {
       {isContactModalOpen && <ContactModal onClose={() => setIsContactModalOpen(false)} />}
       {isResumeModalOpen  && <ResumeModal  onClose={() => setIsResumeModalOpen(false)}  />}
       {isProjectsModalOpen&& <ProjectsModal onClose={() => setIsProjectsModalOpen(false)}/>}
+      {isCertModalOpen && ( <CertificateModal onClose={() => setIsCertModalOpen(false)} />)}
+
 
     </div>
   );

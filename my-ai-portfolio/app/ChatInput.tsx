@@ -25,6 +25,8 @@ export default function ChatInput({ onAction }: ChatInputProps) {
       onAction('showContact');
     } else if (trimmed.includes('fun')) {
       onAction('showFun');
+    } else if (trimmed.includes('certificat')) {
+        onAction('showCertificates');
     } else {
       // default: show "Me" modal
       onAction('showMe');
@@ -40,7 +42,7 @@ export default function ChatInput({ onAction }: ChatInputProps) {
         value={text}
         onChange={(e) => setText(e.target.value)}
         onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-        placeholder="Ask me anything..."
+        placeholder="Show me my resume..."
         className="flex-1 px-4 py-2 rounded-full bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
       <button
