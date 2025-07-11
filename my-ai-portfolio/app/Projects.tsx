@@ -10,7 +10,7 @@ interface Project {
   title: string;
   subtitle: string;
   image: string;
-  githubUrl: string;        // ← new!
+  githubUrl: string;
 }
 
 const projects: Project[] = [
@@ -18,7 +18,7 @@ const projects: Project[] = [
     title: 'CO2 Emissions Dashboard',
     subtitle: 'EDA integration',
     image: '/demo1.png',
-    githubUrl: 'https://github.com/dave21-py/co2-emissions-dashboard',   // ← add your URL
+    githubUrl: 'https://github.com/dave21-py/co2-emissions-dashboard',
   },
   {
     title: 'LLM Benchmark',
@@ -50,7 +50,6 @@ const projects: Project[] = [
     image: '/tictactoescreen.png',
     githubUrl: 'https://github.com/dave21-py/TicTacToe',
   },
-  // …more projects
 ];
 
 type ProjectsModalProps = {
@@ -99,7 +98,7 @@ export default function ProjectsModal({ onClose }: ProjectsModalProps) {
           {visible.map((p, idx) => (
             <div
               key={idx}
-              className="relative h-80 rounded-2xl overflow-hidden bg-black"
+              className="relative h-80 rounded-2xl overflow-hidden bg-black transform transition-transform duration-300 ease-out hover:scale-105 hover:shadow-lg"
             >
               {/* dark gradient overlay */}
               <div className="absolute inset-0 bg-gradient-to-b from-black/80 to-transparent z-10" />
@@ -108,7 +107,7 @@ export default function ProjectsModal({ onClose }: ProjectsModalProps) {
               <Image src={p.image} alt={p.title} fill className="object-cover" />
 
               {/* title/subtitle */}
-              <div className="absolute bottom-4 left-4 z-20 text-black">
+              <div className="absolute bottom-4 left-4 z-20 text-white">
                 <p className="text-sm">{p.subtitle}</p>
                 <h3 className="text-2xl font-semibold">{p.title}</h3>
               </div>
@@ -118,7 +117,7 @@ export default function ProjectsModal({ onClose }: ProjectsModalProps) {
                 href={p.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="absolute bottom-4 right-4 z-20 text-black hover:text-white-300 transition-colors"
+                className="absolute bottom-4 right-4 z-20 text-white hover:text-gray-300 transition-colors"
               >
                 <FaGithub size={24} />
               </a>
