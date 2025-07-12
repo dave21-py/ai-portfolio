@@ -5,6 +5,11 @@ import React from 'react';
 import { IoMdClose } from 'react-icons/io';
 import { FaCode, FaCogs, FaPaintBrush, FaUsers } from 'react-icons/fa';
 
+// Define the interface for the component's props
+interface SkillsModalProps {
+  onClose: () => void;
+}
+
 // --- Data for our skills, organized into categories. This makes the code much cleaner! ---
 const skillsData = [
   {
@@ -29,7 +34,8 @@ const skillsData = [
   }
 ];
 
-const SkillsModal = ({ onClose }) => {
+// Apply the SkillsModalProps type to the component
+const SkillsModal = ({ onClose }: SkillsModalProps) => {
   return (
     // The semi-transparent backdrop
     <div 
@@ -43,21 +49,21 @@ const SkillsModal = ({ onClose }) => {
       >
         {/* Close Button */}
         <button
-          className="absolute top-4 right-4 text-gray-400 hover:text-gray-800 transition-colors z-10"
+          className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors z-10"
           onClick={onClose}
         >
           <IoMdClose size={28} />
         </button>
 
         {/* Modal Content */}
-        <div className="p-8 md:p-12">
-          <h2 className="text-4xl font-bold text-white-900 mb-10">Skills & Expertise</h2>
+        <div className="p-8 md:p-12 text-white">
+          <h2 className="text-4xl font-bold mb-10">Skills & Expertise</h2>
 
           <div className="space-y-10">
             {/* We loop through our data to create each section */}
             {skillsData.map((category) => (
               <div key={category.title}>
-                <h3 className="flex items-center gap-3 text-xl font-semibold text-white-800">
+                <h3 className="flex items-center gap-3 text-xl font-semibold text-gray-100">
                   <category.Icon />
                   {category.title}
                 </h3>
