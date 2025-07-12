@@ -69,7 +69,7 @@ export default function Home() {
         className="z-30 mt-[50px] mb-8 flex flex-col items-center text-center md:mt-[50px] md:mb-12"
         variants={{
           hidden: { opacity: 0, y: -60 },
-          visible: { opacity: 1, y: 0, transition: { type: 'ease', duration: 0.8 } },
+          visible: { opacity: 1, y: 0, transition: { ease: 'easeOut', duration: 0.8 } },
         }}
         initial="hidden"
         animate="visible"
