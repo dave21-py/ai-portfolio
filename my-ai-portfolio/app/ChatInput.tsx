@@ -43,11 +43,11 @@ export default function ChatInput({ onAction }: ChatInputProps) {
         onChange={(e) => setText(e.target.value)}
         onKeyDown={(e) => e.key === 'Enter' && handleSend()}
         placeholder="Show me my resume..."
-        className="flex-1 px-4 py-2 rounded-full bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="flex-1 px-5 py-3 rounded-full bg-white/10 backdrop-blur-lg text-white placeholder-gray-400 border border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-lg"
       />
       <button
         onClick={handleSend}
-        className="ml-2 p-2 bg-blue-600 rounded-full text-white hover:bg-blue-700 transition-colors"
+        className="-ml-10 p-2 bg-blue-600 rounded-full text-white hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-400"
       >
         <FaArrowRight />
       </button>
