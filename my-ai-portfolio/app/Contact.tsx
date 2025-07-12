@@ -3,15 +3,14 @@
 import React from 'react';
 import { IoMdClose } from 'react-icons/io';
 
-// We define an interface for our component's props here.
-// This tells TypeScript that 'onClose' is a function that takes no arguments and returns nothing.
+// Define an interface for the props
 interface ContactModalProps {
   onClose: () => void;
 }
 
-// We apply the ContactModalProps type to our component's props.
+// Functional component with props destructuring
 const ContactModal = ({ onClose }: ContactModalProps) => {
-  // Data for social links to keep the code clean and easy to update
+  // Social links data
   const socialLinks = [
     { name: 'LinkedIn', href: 'https://www.linkedin.com/in/david-geddam/' },
     { name: 'Discord', href: 'https://discord.com/users/marl0916_20448' },
@@ -19,17 +18,17 @@ const ContactModal = ({ onClose }: ContactModalProps) => {
   ];
 
   return (
-    // Backdrop
+    // Backdrop with fixed position to cover the screen
     <div
       className="fixed inset-0 bg-black/70 z-50 flex justify-center items-center p-4"
-      onClick={onClose}
+      onClick={onClose} // Close modal when backdrop is clicked
     >
-      {/* Modal Panel - We use a light gray background to match the screenshot */}
+      {/* Modal panel */}
       <div
         className="bg-white/10 backdrop-blur-sm rounded-2xl shadow-2xl max-w-lg w-full relative"
-        onClick={(e) => e.stopPropagation()}
+        onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the modal
       >
-        {/* We don't need an explicit close button if it's not in the design, but let's keep it for accessibility */}
+        {/* Close button */}
         <button
           className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors z-10"
           onClick={onClose}
@@ -39,28 +38,28 @@ const ContactModal = ({ onClose }: ContactModalProps) => {
 
         {/* Modal Content */}
         <div className="p-8 md:p-10">
-          
-          {/* Top Row: Title and Handle */}
+          {/* Title and handle */}
           <div className="flex justify-between items-center text-white">
             <h2 className="text-3xl font-bold">Contacts</h2>
             <p className="text-gray-400">@David.Geddam</p>
           </div>
 
-          {/* Email Link */}
+          {/* Email link */}
           <div className="mt-8">
             <a
               href="mailto:davidspurgeongeddam@gmail.com"
               className="text-blue-400 font-semibold text-lg flex items-center gap-2 group"
             >
               davidspurgeongeddam@gmail.com
-              <span className="transition-transform group-hover:translate-x-1">></span>
+              {/* Correct JSX for symbol */}
+              <span className="transition-transform group-hover:translate-x-1">›</span> {/* Changed '>' to '›' */}
             </a>
           </div>
 
           {/* Social Links Divider and Row */}
           <div className="mt-10 pt-6 border-t border-gray-600">
             <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
-              {socialLinks.map(link => (
+              {socialLinks.map((link) => (
                 <a
                   key={link.name}
                   href={link.href}
