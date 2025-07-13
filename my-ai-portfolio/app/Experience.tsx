@@ -13,7 +13,7 @@ const experienceData = [
   {
     logo: '/forage-logo.png', 
     company: 'Forage',
-    title: 'Virtual Experience Internship',
+    title: 'Virtual Job Simulation',
     date: 'June 2025 - Present',
     isCurrent: true,
     description: [
