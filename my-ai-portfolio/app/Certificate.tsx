@@ -22,13 +22,19 @@ const certificates: Certificate[] = [
   },
   {
     title: 'Gen AI Powered Data Analytics',
-    issuer: 'Tata Group / Forage',
+    issuer: 'Tata Group, Forage',
     image: '/tata.png',
     link: 'https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/ifobHAoMjQs9s6bKS/gMTdCXwDdLYoXZ3wG_ifobHAoMjQs9s6bKS_z4onoAb2QCEfZEHx8_1751843491388_completion_certificate.pdf',
   },
   {
+    title: 'Software Development',
+    issuer: 'Datacom, Forage',
+    image: '/datacom.png',
+    link: 'https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/gCW7Xki5Y3vNpBmnn/L3NcyCoAjLno9d3T9_gCW7Xki5Y3vNpBmnn_z4onoAb2QCEfZEHx8_1752372071695_completion_certificate.pdf',
+  },
+  {
     title: 'Technology',
-    issuer: 'Deloitte',
+    issuer: 'Deloitte, Forage',
     image: '/tech.png',
     link: 'https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/9PBTqmSxAf6zZTseP/udmxiyHeqYQLkTPvf_9PBTqmSxAf6zZTseP_z4onoAb2QCEfZEHx8_1751348369223_completion_certificate.pdf',
   },
