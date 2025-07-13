@@ -8,30 +8,28 @@ interface ExperienceModalProps {
   onClose: () => void;
 }
 
-// --- Your Experience Data Goes Here ---
-// This makes it super easy to update your experience in the future.
-// Just add new objects to this array.
+// --- Your Updated Experience Data ---
 const experienceData = [
   {
-    logo: '/nvidia-logo.png', // IMPORTANT: Create a 100x100px logo and place in your /public folder
-    company: 'NVIDIA',
-    title: 'Deep Learning Intern',
-    date: 'Summer 2024',
+    logo: '/forage-logo.png', 
+    company: 'Forage',
+    title: 'Virtual Experience Internship',
+    date: 'June 2025 - Present',
     description: [
-      'Developed and optimized computer vision models for real-time object detection.',
-      'Collaborated with the research team to implement a novel neural network architecture, resulting in a 10% performance increase.',
-      'Utilized PyTorch and CUDA for high-performance model training and inference.'
+      'JPMorgan Chase & Co. - Software Engineering Virtual Experience.',
+      'Datacom - Software Development Virtual Experience.',
+      'Tata - GenAI Powered Data Analytics Virtual Experience.',
+      'Deloitte - Technology Consulting Virtual Experience.'
     ]
   },
   {
-    logo: '/bju-logo.png', // IMPORTANT: Create a 100x100px logo and place in your /public folder
-    company: 'Bob Jones University AI Lab',
-    title: 'AI Research Assistant',
-    date: 'Jan 2024 – May 2024',
+    logo: '/bju-logo.png',
+    company: 'Bob Jones University',
+    title: 'IT AV Technician (Part-time)',
+    date: 'May 2025 - Present',
     description: [
-      'Assisted senior researchers in a project on Natural Language Processing for sentiment analysis.',
-      'Responsible for preprocessing and cleaning large text datasets for model training.',
-      'Co-authored a research paper summary on emerging trends in Large Language Models (LLMs).'
+      'Provide on-site technical support for campus-wide Audio/Visual systems.',
+      'Troubleshoot hardware and software issues to ensure successful event execution.'
     ]
   }
 ];
@@ -54,23 +52,29 @@ const ExperienceModal = ({ onClose }: ExperienceModalProps) => {
         </button>
 
         <div className="p-8 md:p-12">
-          <h2 className="text-4xl font-bold text-white mb-10">Work Experience</h2>
+          <h2 className="text-4xl font-bold text-white mb-10">Experience</h2>
 
           <div className="relative">
-            {/* The timeline line */}
-            <div className="absolute left-9 top-0 h-full w-0.5 bg-gray-600/50" aria-hidden="true"></div>
+            {/* The timeline line - Adjusted left position for alignment */}
+            <div className="absolute left-[30px] top-2 h-full w-0.5 bg-gray-600/50" aria-hidden="true"></div>
 
             <div className="space-y-12">
               {experienceData.map((exp, index) => (
-                <div key={index} className="relative flex items-start gap-6">
-                  {/* The timeline dot and logo */}
-                  <div className="flex-shrink-0 w-20 h-20 flex items-center justify-center">
-                    <span className="absolute left-6 top-7 w-6 h-6 bg-blue-500 rounded-full border-4 border-gray-800 z-10"></span>
-                    <Image src={exp.logo} alt={`${exp.company} logo`} width={60} height={60} className="rounded-full relative z-0" />
+                <div key={index} className="relative flex items-start gap-4">
+                  
+                  {/* --- THIS IS THE UPDATED SECTION --- */}
+                  <div className="flex-shrink-0 relative pt-1">
+                    {/* The timeline dot - NOW POSITIONED CORRECTLY ON THE LINE */}
+                    <div className="absolute top-[18px] left-[24px] h-4 w-4 rounded-full bg-blue-500 border-2 border-white"></div>
+                    {/* The logo image with a subtle background and padding */}
+                    <div className="ml-12 w-16 h-16 flex items-center justify-center bg-gray-800/50 rounded-full p-1">
+                      <Image src={exp.logo} alt={`${exp.company} logo`} width={56} height={56} className="rounded-full" />
+                    </div>
                   </div>
+                  {/* --- END OF UPDATED SECTION --- */}
                   
                   {/* The content */}
-                  <div className="flex-1 text-white">
+                  <div className="flex-1 text-white pt-2">
                     <p className="text-lg font-bold">{exp.title}</p>
                     <p className="text-md text-gray-300">{exp.company}</p>
                     <p className="text-sm text-gray-400 mt-1">{exp.date}</p>
