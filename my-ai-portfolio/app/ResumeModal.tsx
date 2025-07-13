@@ -23,7 +23,7 @@ export default function ResumeModal({ onClose }: ResumeModalProps) {
     >
       <div
         className="
-          bg-gray-900/75 backdrop-blur-md rounded-2xl shadow-2xl 
+          bg-white/10 backdrop-blur-sm rounded-2xl shadow-2xl 
           max-w-4xl w-full p-4 relative
           h-[90vh]
           flex flex-col

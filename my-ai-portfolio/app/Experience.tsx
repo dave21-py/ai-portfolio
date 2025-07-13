@@ -15,6 +15,7 @@ const experienceData = [
     company: 'Forage',
     title: 'Virtual Experience Internship',
     date: 'June 2025 - Present',
+    isCurrent: true,
     description: [
       'JPMorgan Chase & Co. - Software Engineering Virtual Experience.',
       'Datacom - Software Development Virtual Experience.',
@@ -27,6 +28,7 @@ const experienceData = [
     company: 'Bob Jones University',
     title: 'IT AV Technician (Part-time)',
     date: 'May 2025 - Present',
+    isCurrent: true,
     description: [
       'Provide on-site technical support for campus-wide Audio/Visual systems.',
       'Troubleshoot hardware and software issues to ensure successful event execution.'
@@ -66,10 +68,13 @@ const ExperienceModal = ({ onClose }: ExperienceModalProps) => {
                   <div className="flex-shrink-0 relative pt-1">
                     {/* The timeline dot - NOW POSITIONED CORRECTLY ON THE LINE */}
                     <div className="absolute top-[18px] left-[24px] h-4 w-4 rounded-full bg-blue-500 border-2 border-white"></div>
-                    {/* The logo image with a subtle background and padding */}
-                    <div className="ml-12 w-16 h-16 flex items-center justify-center bg-gray-800/50 rounded-full p-1">
-                      <Image src={exp.logo} alt={`${exp.company} logo`} width={56} height={56} className="rounded-full" />
-                    </div>
+                    {/* The logo image with conditional glowing effect */}
+<div className={`
+  ml-12 w-16 h-16 flex items-center justify-center bg-gray-800/50 rounded-full p-1
+  ${exp.isCurrent ? 'shadow-[0_0_15px_rgba(59,130,246,0.8)] animate-pulse' : ''}
+`}>
+  <Image src={exp.logo} alt={`${exp.company} logo`} width={56} height={56} className="rounded-full" />
+</div>
                   </div>
                   {/* --- END OF UPDATED SECTION --- */}
                   
