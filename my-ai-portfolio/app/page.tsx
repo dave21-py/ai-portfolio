@@ -2,7 +2,7 @@
 
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
-import { FaGithub, FaRegSmile, FaBriefcase, FaLayerGroup, FaMagic, FaUserFriends } from 'react-icons/fa';
+import { FaGithub, FaRegSmile, FaBriefcase, FaLayerGroup, FaMagic, FaUserFriends, FaBuilding } from 'react-icons/fa';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 
@@ -14,6 +14,7 @@ import ContactModal from './Contact';
 import ResumeModal from './ResumeModal';
 import ProjectsModal from './Projects';
 import CertificateModal from './Certificate';
+import ExperienceModal from './Experience'; 
 
 // disable SSR for WebGL and cursor components
 const FluidCanvas = dynamic(() => import('./FluidCanvas'), { ssr: false });
@@ -27,6 +28,7 @@ export default function Home() {
   const [isResumeModalOpen, setIsResumeModalOpen] = useState(false);
   const [isProjectsModalOpen, setIsProjectsModalOpen] = useState(false);
   const [isCertModalOpen, setIsCertModalOpen] = useState(false);
+  const [isExperienceModalOpen, setIsExperienceModalOpen] = useState(false);
 
 
   const handleAction = (action: string) => {
@@ -51,6 +53,9 @@ export default function Home() {
         break;
       case 'showCertificates':
         setIsCertModalOpen(true);
+        break;
+      case 'showExperience': 
+        setIsExperienceModalOpen(true);
         break;
       default:
         // fallback to “Me” if nothing matches
@@ -150,6 +155,7 @@ export default function Home() {
       {isResumeModalOpen  && <ResumeModal  onClose={() => setIsResumeModalOpen(false)}  />}
       {isProjectsModalOpen&& <ProjectsModal onClose={() => setIsProjectsModalOpen(false)}/>}
       {isCertModalOpen && ( <CertificateModal onClose={() => setIsCertModalOpen(false)} />)}
+      {isExperienceModalOpen && <ExperienceModal onClose={() => setIsExperienceModalOpen(false)}/>}
 
 
     </div>
