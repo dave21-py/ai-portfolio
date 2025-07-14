@@ -90,7 +90,7 @@ export default function Home() {
             Welcome to my AI Portfolio
           </h1>
           <Image
-            src="/memoji.png"
+            src="/memo.png"
             alt="David's Memoji"
             width={130}
             height={130}
