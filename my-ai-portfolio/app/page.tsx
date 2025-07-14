@@ -14,7 +14,8 @@ import ContactModal from './Contact';
 import ResumeModal from './ResumeModal';
 import ProjectsModal from './Projects';
 import CertificateModal from './Certificate';
-import ExperienceModal from './Experience'; 
+import ExperienceModal from './Experience';
+import EducationModal from './Education';
 
 // disable SSR for WebGL and cursor components
 const FluidCanvas = dynamic(() => import('./FluidCanvas'), { ssr: false });
@@ -29,6 +30,7 @@ export default function Home() {
   const [isProjectsModalOpen, setIsProjectsModalOpen] = useState(false);
   const [isCertModalOpen, setIsCertModalOpen] = useState(false);
   const [isExperienceModalOpen, setIsExperienceModalOpen] = useState(false);
+  const [isEducationModalOpen, setIsEducationModalOpen] = useState(false);
 
 
   const handleAction = (action: string) => {
@@ -56,6 +58,9 @@ export default function Home() {
         break;
       case 'showExperience': 
         setIsExperienceModalOpen(true);
+        break;
+      case 'showEducation': 
+        setIsEducationModalOpen(true);
         break;
       default:
         // fallback to “Me” if nothing matches
@@ -156,6 +161,7 @@ export default function Home() {
       {isProjectsModalOpen&& <ProjectsModal onClose={() => setIsProjectsModalOpen(false)}/>}
       {isCertModalOpen && ( <CertificateModal onClose={() => setIsCertModalOpen(false)} />)}
       {isExperienceModalOpen && <ExperienceModal onClose={() => setIsExperienceModalOpen(false)}/>}
+      {isEducationModalOpen && <EducationModal onClose={() => setIsEducationModalOpen(false)} />}
 
 
     </div>

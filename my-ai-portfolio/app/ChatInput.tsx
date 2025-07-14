@@ -29,6 +29,8 @@ export default function ChatInput({ onAction }: ChatInputProps) {
         onAction('showCertificates');
     } else if (trimmed.includes('experience')) {
         onAction('showExperience');
+    } else if (trimmed.includes('education')) { // <-- ADD THIS LINE
+        onAction('showEducation'); 
     } else {
       // default: show "Me" modal
       onAction('showMe');
