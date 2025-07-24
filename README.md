@@ -36,7 +36,7 @@ and **JavaScript** to highlight my AI and software projects.
 
 ```bash
 # 1) Clone the repo
-git clone https://github.com/dave21-py/dave21-py.github.io.git
+git clone https://github.com/dave21-py/ai-portfolio.git
 cd dave21-py.github.io
 
 # 2) Start a simple HTTP server
