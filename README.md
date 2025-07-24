@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="160px" src="logo.png" alt="AI Portfolio logo" />
+  <img width="250px" src="logo.png" alt="AI Portfolio logo" />
   <h2 align="center">David Geddam's AI Portfolio</h2>
   <p align="center">Showcasing projects, skills and experience.</p>
 </p>
