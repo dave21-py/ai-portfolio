@@ -1,11 +1,11 @@
-// app/ChatInput.tsx
 'use client';
 
 import { useState } from 'react';
 import { FaArrowRight } from 'react-icons/fa';
 
+// The onAction prop will now also accept the original text query
 interface ChatInputProps {
-  onAction: (action: string) => void;
+  onAction: (action: string, query: string) => void;
 }
 
 export default function ChatInput({ onAction }: ChatInputProps) {
@@ -15,38 +15,40 @@ export default function ChatInput({ onAction }: ChatInputProps) {
     const trimmed = text.trim().toLowerCase();
     if (!trimmed) return;
 
+    let action = 'showMe'; // Default action if no keywords match
+
     if (trimmed.includes('resume')) {
-      onAction('showResume');
-    } else if (trimmed.includes('skill') || trimmed.includes('skills')) {
-      onAction('showSkills');
-    } else if (trimmed.includes('project') || trimmed.includes('projects')) {
-      onAction('showProjects');
+      action = 'showResume';
+    } else if (trimmed.includes('skill')) {
+      action = 'showSkills';
+    } else if (trimmed.includes('project')) {
+      action = 'showProjects';
     } else if (trimmed.includes('contact')) {
-      onAction('showContact');
+      action = 'showContact';
     } else if (trimmed.includes('fun')) {
-      onAction('showFun');
+      action = 'showFun';
     } else if (trimmed.includes('certificat')) {
-        onAction('showCertificates');
+      action = 'showCertificates';
     } else if (trimmed.includes('experience')) {
-        onAction('showExperience');
-    } else if (trimmed.includes('education')) { // <-- ADD THIS LINE
-        onAction('showEducation'); 
-    } else {
-      // default: show "Me" modal
-      onAction('showMe');
+      action = 'showExperience';
+    } else if (trimmed.includes('education')) {
+      action = 'showEducation';
     }
+    
+    // Pass both the determined action AND the original text from the input
+    onAction(action, text);
 
     setText('');
   };
 
   return (
-    <div className="flex w-full max-w-xl">
+    <div className="flex w-full max-w-xl items-center">
       <input
         type="text"
         value={text}
         onChange={(e) => setText(e.target.value)}
         onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-        placeholder="Show me my resume..."
+        placeholder="Ask me anything..."
         className="flex-1 px-5 py-3 rounded-full bg-white/10 backdrop-blur-lg text-white placeholder-gray-400 border border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-lg"
       />
       <button
