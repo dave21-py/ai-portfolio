@@ -15,6 +15,24 @@ interface Project {
 
 const projects: Project[] = [
   {
+    title: 'VibeCLI',
+    subtitle: 'Dual-Mode AI Shell & Creative Assistant',
+    image: '/vibe.png',
+    githubUrl: 'https://github.com/dave21-py/VibeCLI',
+  },
+  {
+    title: 'Prompt Enhancer',
+    subtitle: 'AI-Powered Prompt Optimization Tool',
+    image: '/prompt.png',
+    githubUrl: 'https://github.com/dave21-py/prompt-enhancer',
+  },
+  {
+    title: 'AI Portfolio Website',
+    subtitle: 'Personal Portfolio Website with AI Integration',
+    image: '/portfolio.png',
+    githubUrl: 'https://github.com/dave21-py/ai-portfolio',
+  },
+  {
     title: 'CO2 Emissions Dashboard',
     subtitle: 'EDA integration',
     image: '/demo1.png',
