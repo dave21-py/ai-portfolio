@@ -17,7 +17,7 @@ const experienceData = [
     date: 'June 2025 - Present',
     isCurrent: true,
     description: [
-      'JPMorgan Chase & Co. - Software Engineering Virtual Experience.',
+      'Walmart Global Tech - Advanced Software Engineering Virtual Experience.',
       'Datacom - Software Development Virtual Experience.',
       'Tata - GenAI Powered Data Analytics Virtual Experience.',
       'Deloitte - Technology Consulting Virtual Experience.'
@@ -32,6 +32,17 @@ const experienceData = [
     description: [
       'Provide on-site technical support for campus-wide Audio/Visual systems.',
       'Troubleshoot hardware and software issues to ensure successful event execution.'
+    ]
+  },
+  {
+    logo: '/bju-logo.png',
+    company: 'Bob Jones University',
+    title: 'Training Assistant - Arduino Computer Engineering',
+    date: 'July 2025 - July 2025',
+    isCurrent: false,
+    description: [
+      'Instructed a cohort of 15+ middle and high school students in Arduino programming fundamentals and hardware integration.',
+      'Guided students through the development of hands-on projects, improving their practical understanding of computer engineering principles.'
     ]
   }
 ];

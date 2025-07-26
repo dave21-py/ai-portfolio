@@ -13,7 +13,7 @@ export default function ResumeModal({ onClose }: ResumeModalProps) {
 
   // Cache‐bust each open
   useEffect(() => {
-    setPdfUrl(`/DavidGeddamResumeUpdated2025.pdf?cb=${Date.now()}`);
+    setPdfUrl(`/DavidGeddamUpdated2025.pdf?cb=${Date.now()}`);
   }, []);
 
   return (
