@@ -21,7 +21,7 @@ const FluidCanvas = () => {
       COLORFUL: true,
       COLOR_UPDATE_SPEED: 10,
       PAUSED: false,
-      TRANSPARENT: false,
+      TRANSPARENT: true,
       BACKGROUND_COLOR: { r: 1, g: 1, b: 1 }, // Note: This sets the background to white. If you want black, use { r: 0, g: 0, b: 0 }
       BLOOM: true,
       BLOOM_ITERATIONS: 4,

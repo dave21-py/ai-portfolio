@@ -2,8 +2,9 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* This is our light theme */
+  --background: #ffffff; /* White */
+  --foreground: #171717; /* Black */
 }
 
 @theme inline {
@@ -13,10 +14,11 @@
   --font-mono: var(--font-geist-mono);
 }
 
+/* This is the key fix: We are now FORCING dark mode to use the same light theme colors. */
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #ffffff; /* White */
+    --foreground: #171717; /* Black */
   }
 }
 
@@ -26,17 +28,6 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* ensure the fluid canvas always uses your background var */
 .fluid-canvas {
   background-color: var(--background);
 }
-
-/* 
-   If you’d rather force a white backdrop even in dark mode, uncomment:
-
-@media (prefers-color-scheme: dark) {
-  .fluid-canvas {
-    background-color: #ffffff !important;
-  }
-}
-*/
