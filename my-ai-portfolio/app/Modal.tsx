@@ -13,10 +13,8 @@ const AboutModal = ({ onClose }: AboutModalProps) => {
   const skills = [
     { name: "Python", icon: <Code2 size={20} />, color: "text-blue-600 bg-blue-50 border-blue-200" },
     { name: "Java", icon: <Coffee size={20} />, color: "text-orange-600 bg-orange-50 border-orange-200" },
-    { name: "GenAI & LLMs", icon: <Zap size={20} />, color: "text-purple-600 bg-purple-50 border-purple-200" },
-    { name: "Machine Learning", icon: <Brain size={20} />, color: "text-green-600 bg-green-50 border-green-200" },
-    { name: "React & Next.js", icon: <Code2 size={20} />, color: "text-sky-600 bg-sky-50 border-sky-200" },
-    { name: "SQL & Databases", icon: <Code2 size={20} />, color: "text-red-600 bg-red-50 border-red-200" },
+    { name: "GenAI", icon: <Zap size={20} />, color: "text-purple-600 bg-purple-50 border-purple-200" },
+    { name: "Machine Learning", icon: <Brain size={20} />, color: "text-green-600 bg-green-50 border-green-200" }
   ];
 
   const interests = [
@@ -33,9 +31,10 @@ const AboutModal = ({ onClose }: AboutModalProps) => {
     }
   };
 
+  // <-- THE FIX IS HERE: The 'transition' property has been removed from 'visible'.
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 100 } }
+    visible: { opacity: 1, y: 0 }
   };
 
   return (
@@ -48,7 +47,7 @@ const AboutModal = ({ onClose }: AboutModalProps) => {
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.95 }}
           transition={{ type: "spring", stiffness: 400, damping: 40 }}
-          className="relative bg-gray-50 rounded-3xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col" // <-- DESIGN REFRESH: Flexbox layout
+          className="relative bg-gray-50 rounded-3xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
