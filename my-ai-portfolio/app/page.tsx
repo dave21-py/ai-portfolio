@@ -219,6 +219,7 @@ export default function Home() {
       {/* --- Modals --- */}
       {isModalOpen && <Modal onClose={() => setIsModalOpen(false)} />}
       {isSkillsModalOpen && <Skills onClose={() => setIsSkillsModalOpen(false)} />}
+      {isFunModalOpen && <FunModal onClose={() => setIsFunModalOpen(false)} />}
       {isContactModalOpen && <ContactModal onClose={() => setIsContactModalOpen(false)} />}
       {isResumeModalOpen && <ResumeModal onClose={() => setIsResumeModalOpen(false)} />}
       {isProjectsModalOpen && <ProjectsModal onClose={() => setIsProjectsModalOpen(false)} />}
