@@ -4,7 +4,8 @@ import dynamic from 'next/dynamic';
 import { useState } from 'react';
 import { FaGithub, FaRegSmile, FaBriefcase, FaLayerGroup, FaMagic, FaUserFriends, FaBuilding, FaArrowLeft } from 'react-icons/fa';
 import Image from 'next/image';
-import { motion, AnimatePresence } from 'framer-motion';
+// FIX: Combined all framer-motion imports into one line
+import { motion, AnimatePresence, Variants } from 'framer-motion';
 
 // Import all your modals
 import ChatInput from './ChatInput';
@@ -75,8 +76,8 @@ export default function Home() {
     setChatHistory([]);
   };
 
-  // --- Animation Variants for a World-Class Feel ---
-  const containerVariants = {
+  // --- Animation Variants for a World-Class Feel (FIX: Added 'Variants' type) ---
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -84,21 +85,36 @@ export default function Home() {
     },
   };
 
-  const textVariants = {
+  const textVariants: Variants = {
     hidden: { y: 20, opacity: 0 },
     visible: { y: 0, opacity: 1, transition: { ease: 'easeOut', duration: 0.5 } },
   };
 
-  const memojiVariants = {
+  const memojiVariants: Variants = {
     hidden: { scale: 0.8, opacity: 0 },
     visible: {
       scale: 1,
       opacity: 1,
-      transition: { type: 'spring', stiffness: 100, damping: 10, delay: 0.5 },
+      transition: { 
+        // Initial pop-in animation
+        type: 'spring', 
+        stiffness: 100, 
+        damping: 10, 
+        delay: 0.5 
+      },
     },
   };
+  
+  const memojiBreathingAnimation = {
+      translateY: [0, -8, 0], // Smooth "breathing" with translateY
+      transition: { 
+        duration: 3, 
+        repeat: Infinity, 
+        ease: "easeInOut" 
+      }
+  }
 
-  const bottomNavVariants = {
+  const bottomNavVariants: Variants = {
     hidden: { opacity: 0, y: 50 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut", delay: 0.8 } },
   };
@@ -155,15 +171,14 @@ export default function Home() {
                   ))}
                 </motion.h1>
 
-                {/* --- THE FIX FOR THE LAG --- */}
-                {/* We now animate `scale` instead of `y` for high performance. */}
+                {/* --- FIX FOR THE LAG & ANIMATION --- */}
+                {/* We use the variant for the initial pop-in and the animate prop for the continuous loop */}
                 <motion.div
-  variants={memojiVariants}
-  animate={{ translateY: [0, -8, 0] }} // Smooth "breathing" with translateY
-  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
->
-  <Image src="/memo.png" alt="David's Memoji" width={140} height={140} className="mt-8 mx-auto"/>
-</motion.div>
+                  variants={memojiVariants}
+                  animate={memojiBreathingAnimation}
+                >
+                  <Image src="/memo.png" alt="David's Memoji" width={140} height={140} className="mt-8 mx-auto"/>
+                </motion.div>
                 {/* --- END OF FIX --- */}
               </div>
             </motion.div>
