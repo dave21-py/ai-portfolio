@@ -4,7 +4,6 @@ import dynamic from 'next/dynamic';
 import { useState } from 'react';
 import { FaGithub, FaRegSmile, FaBriefcase, FaLayerGroup, FaMagic, FaUserFriends, FaBuilding, FaArrowLeft } from 'react-icons/fa';
 import Image from 'next/image';
-// FIX: Combined all framer-motion imports into one line
 import { motion, AnimatePresence, Variants } from 'framer-motion';
 
 // Import all your modals
@@ -30,7 +29,6 @@ type ChatMessage = {
 };
 
 export default function Home() {
-  // --- All your modal states ---
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSkillsModalOpen, setIsSkillsModalOpen] = useState(false);
   const [isFunModalOpen, setIsFunModalOpen] = useState(false);
@@ -40,8 +38,6 @@ export default function Home() {
   const [isCertModalOpen, setIsCertModalOpen] = useState(false);
   const [isExperienceModalOpen, setIsExperienceModalOpen] = useState(false);
   const [isEducationModalOpen, setIsEducationModalOpen] = useState(false);
-
-  // --- New UI/Chat states ---
   const [isChatActive, setIsChatActive] = useState(false);
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
   const [isAiThinking, setIsAiThinking] = useState(false);
@@ -76,7 +72,6 @@ export default function Home() {
     setChatHistory([]);
   };
 
-  // --- Animation Variants for a World-Class Feel (FIX: Added 'Variants' type) ---
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
@@ -90,29 +85,28 @@ export default function Home() {
     visible: { y: 0, opacity: 1, transition: { ease: 'easeOut', duration: 0.5 } },
   };
 
+  // --- FIX: COMBINED ALL MEMOJI ANIMATIONS INTO ONE VARIANT ---
   const memojiVariants: Variants = {
     hidden: { scale: 0.8, opacity: 0 },
     visible: {
       scale: 1,
       opacity: 1,
-      transition: { 
-        // Initial pop-in animation
-        type: 'spring', 
-        stiffness: 100, 
-        damping: 10, 
-        delay: 0.5 
-      },
-    },
-  };
-  
-  const memojiBreathingAnimation = {
-      translateY: [0, -8, 0], // Smooth "breathing" with translateY
-      transition: { 
-        duration: 3, 
-        repeat: Infinity, 
-        ease: "easeInOut" 
+      translateY: [0, -8, 0], // The "breathing" animation keyframes
+      transition: {
+        // Pop-in transition (applies to scale and opacity)
+        delay: 0.5,
+        type: "spring",
+        damping: 10,
+        stiffness: 100,
+        // Breathing loop transition (applies only to translateY)
+        translateY: {
+          duration: 3,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }
       }
-  }
+    }
+  };
 
   const bottomNavVariants: Variants = {
     hidden: { opacity: 0, y: 50 },
@@ -124,7 +118,6 @@ export default function Home() {
       <FluidCanvas />
       <FluidCursor />
 
-      {/* --- BACK BUTTON (only shows in chat mode) --- */}
       <AnimatePresence>
         {isChatActive && (
           <motion.button
@@ -140,7 +133,6 @@ export default function Home() {
         )}
       </AnimatePresence>
       
-      {/* GitHub Link */}
       <a
         href="https://github.com/dave21-py"
         target="_blank"
@@ -153,7 +145,6 @@ export default function Home() {
       <div className="relative z-30 flex flex-col items-center">
         <AnimatePresence mode="wait">
           {!isChatActive ? (
-            // --- UPDATED: Welcome View with new animation sequence ---
             <motion.div
               key="welcome"
               className="mt-[8vh] mb-8 text-center"
@@ -171,19 +162,14 @@ export default function Home() {
                   ))}
                 </motion.h1>
 
-                {/* --- FIX FOR THE LAG & ANIMATION --- */}
-                {/* We use the variant for the initial pop-in and the animate prop for the continuous loop */}
-                <motion.div
-                  variants={memojiVariants}
-                  animate={memojiBreathingAnimation}
-                >
+                {/* --- FIX: Simplified JSX to just use the variant --- */}
+                <motion.div variants={memojiVariants}>
                   <Image src="/memo.png" alt="David's Memoji" width={140} height={140} className="mt-8 mx-auto"/>
                 </motion.div>
                 {/* --- END OF FIX --- */}
               </div>
             </motion.div>
           ) : (
-            // --- CHAT VIEW (Ready for future enhancements) ---
             <motion.div
               key="chat"
               className="w-full max-w-2xl text-black space-y-6 text-left mt-[15vh]"
