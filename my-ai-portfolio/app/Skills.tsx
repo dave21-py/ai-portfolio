@@ -1,125 +1,185 @@
 'use client';
 
 import React from 'react';
-import { X, Code2, Brain, Database, Cog, Users, Lightbulb } from 'lucide-react';
+import { X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface SkillsModalProps {
   onClose: () => void;
 }
 
-const coreStrengths = {
-  ai: {
-    title: 'AI & Machine Learning',
-    icon: <Brain size={20} className="text-purple-600" />,
-    bgColor: 'bg-purple-50',
-    description: 'Specializing in the technologies that power modern intelligent systems.',
-    skills: ['Python', 'Prompt Engineering', 'GenAI', 'LLM Fundamentals', 'Deep Learning', 'Data Analysis']
+const coreStrengths = [
+  {
+    title: 'PROGRAMMING LANGUAGES',
+    description: 'Core programming languages with practical application experience.',
+    skills: ['Python', 'Java']
   },
-  dev: {
-    title: 'Programming & Development',
-    icon: <Code2 size={20} className="text-blue-600" />,
-    bgColor: 'bg-blue-50',
-    description: 'A strong foundation in multiple languages and robust development practices.',
-    skills: ['Java', 'Python', 'JavaFX', 'HTML/CSS', 'Git & GitHub', 'System Design']
+  {
+    title: 'FRAMEWORKS & LIBRARIES',
+    description: 'Data science and development frameworks for building applications.',
+    skills: ['Hugging Face', 'Pandas', 'NumPy', 'Matplotlib', 'Seaborn', 'Plotly', 'JavaFX']
   }
-};
+];
 
-const otherSkills = [
+const additionalExpertise = [
   {
-    category: 'Data Science & Analytics',
-    skills: ['Pandas', 'NumPy', 'Matplotlib', 'Seaborn', 'Jupyter', 'Data Visualization']
+    category: 'DEVELOPMENT TOOLS',
+    skills: ['Docker', 'Git', 'Jupyter', 'GitHub Actions', 'Streamlit', 'Core Flask']
   },
   {
-    category: 'Tools & Platforms',
-    skills: ['Docker', 'Gradle', 'AWS', 'Extron GUI Designer', 'XML', 'Linux']
-  },
-  {
-    category: 'Professional Skills',
-    skills: ['Problem Solving', 'Critical Thinking', 'Learning Agility', 'Teamwork', 'Creativity', 'Focus']
+    category: 'LANGUAGES',
+    skills: ['Telugu (Native)', 'Hindi (Native)', 'English (Full Professional)', 'Arabic (Elementary)']
   }
 ];
 
 const SkillsModal = ({ onClose }: SkillsModalProps) => {
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.08, delayChildren: 0.1 } }
+    visible: { 
+      opacity: 1, 
+      transition: { 
+        staggerChildren: 0.08, 
+        delayChildren: 0.1 
+      } 
+    }
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 15 },
     visible: { opacity: 1, y: 0 }
   };
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0" onClick={onClose} />
+      <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <motion.div 
+          initial={{ opacity: 0 }} 
+          animate={{ opacity: 1 }} 
+          exit={{ opacity: 0 }} 
+          className="absolute inset-0" 
+          onClick={onClose} 
+        />
         
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.95 }}
+          initial={{ opacity: 0, scale: 0.96, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.96, y: 20 }}
           transition={{ type: "spring", stiffness: 400, damping: 40 }}
-          className="relative bg-gray-50 rounded-3xl shadow-2xl max-w-5xl w-full max-h-[90vh] overflow-hidden flex flex-col"
+          className="relative bg-white rounded-none shadow-2xl max-w-6xl w-full max-h-[95vh] overflow-hidden"
           onClick={(e) => e.stopPropagation()}
         >
-          {/* Header */}
-          <div className="bg-white/80 backdrop-blur-lg border-b border-gray-200 p-8 flex-shrink-0 text-center">
-            <button onClick={onClose} className="absolute top-6 right-6 p-2 rounded-full text-gray-500 hover:bg-gray-100 hover:text-gray-800 transition-all z-10"><X className="w-5 h-5" /></button>
-            <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
-              <div className="inline-block p-4 bg-yellow-100/50 rounded-2xl mb-4">
-                <Lightbulb className="w-10 h-10 text-yellow-600" />
-              </div>
-              <h1 className="text-5xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent mb-2">Skills & Expertise</h1>
-              <p className="text-lg text-gray-600">The tools and technologies I use to build and innovate.</p>
-            </motion.div>
-          </div>
+          {/* Close Button */}
+          <button
+            onClick={onClose}
+            className="absolute top-8 right-8 z-10 text-gray-400 hover:text-gray-600 transition-colors bg-white/80 backdrop-blur-sm rounded-full p-2"
+          >
+            <X className="w-5 h-5" />
+          </button>
 
-          {/* Scrollable Content */}
-          <div className="p-8 overflow-y-auto">
-            <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-12">
-              
-              {/* Core Strengths Section */}
-              <motion.div variants={itemVariants}>
-                <h2 className="text-xl font-bold text-gray-800 mb-4 text-center">Core Strengths</h2>
+          <div className="h-full overflow-y-auto">
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              className="p-12 space-y-12"
+            >
+              {/* Header */}
+              <motion.div variants={itemVariants} className="space-y-4 text-center">
+                <div className="space-y-1">
+                  <h1 className="text-4xl font-light tracking-tight text-gray-900 leading-tight">
+                    TECHNICAL EXPERTISE
+                  </h1>
+                  <div className="h-px bg-gray-900 w-32 mx-auto"></div>
+                </div>
+                <p className="text-lg font-light text-gray-600 tracking-wide max-w-2xl mx-auto">
+                  COMPREHENSIVE SKILLS + EMERGING TECHNOLOGIES
+                </p>
+              </motion.div>
+
+              {/* Core Competencies */}
+              <motion.div variants={itemVariants} className="space-y-8">
+                <div className="text-center">
+                  <h2 className="text-xl font-medium text-gray-900 tracking-wide mb-8">
+                    CORE COMPETENCIES
+                  </h2>
+                </div>
+                
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                  {Object.values(coreStrengths).map(strength => (
-                    <div key={strength.title} className={`border rounded-2xl p-6 ${strength.bgColor} border-gray-200`}>
-                      <div className="flex items-center gap-3 mb-3">
-                        {strength.icon}
-                        <h3 className="text-lg font-bold text-gray-900">{strength.title}</h3>
+                  {coreStrengths.map((strength, index) => (
+                    <motion.div 
+                      key={strength.title}
+                      variants={itemVariants}
+                      className="space-y-4 pb-8 border-b border-gray-100"
+                    >
+                      <div className="space-y-2">
+                        <h3 className="text-sm font-medium text-gray-900 tracking-wider">
+                          {strength.title}
+                        </h3>
+                        <p className="text-gray-600 font-light text-sm leading-relaxed">
+                          {strength.description}
+                        </p>
                       </div>
-                      <p className="text-gray-600 text-sm mb-4">{strength.description}</p>
-                      <div className="flex flex-wrap gap-2">
-                        {strength.skills.map(skill => (
-                          <span key={skill} className="bg-white text-gray-700 text-xs font-medium px-2.5 py-1 rounded-md border">{skill}</span>
+                      
+                      <div className="space-y-1">
+                        {strength.skills.map((skill, skillIndex) => (
+                          <div key={skill} className="text-gray-700 text-sm font-light">
+                            {skill}
+                          </div>
                         ))}
                       </div>
-                    </div>
+                    </motion.div>
                   ))}
                 </div>
               </motion.div>
 
-              {/* Full Skillset Section */}
-              <motion.div variants={itemVariants}>
-                <h2 className="text-xl font-bold text-gray-800 mb-4 text-center">Full Skillset</h2>
-                <div className="bg-white border border-gray-200 rounded-2xl p-6">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-6">
-                    {otherSkills.map(category => (
-                      <div key={category.category}>
-                        <h3 className="font-semibold text-gray-800 mb-2">{category.category}</h3>
-                        <ul className="space-y-1.5">
-                          {category.skills.map(skill => (
-                            <li key={skill} className="text-gray-600 text-sm">{skill}</li>
-                          ))}
-                        </ul>
+              {/* Additional Expertise */}
+              <motion.div variants={itemVariants} className="space-y-8 pt-8 border-t border-gray-200">
+                <div className="text-center">
+                  <h2 className="text-xl font-medium text-gray-900 tracking-wide mb-8">
+                    ADDITIONAL SKILLS
+                  </h2>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                  {additionalExpertise.map((category, index) => (
+                    <motion.div 
+                      key={category.category}
+                      variants={itemVariants}
+                      className="space-y-4"
+                    >
+                      <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wider border-b border-gray-200 pb-2">
+                        {category.category}
+                      </h3>
+                      <div className="space-y-2">
+                        {category.skills.map((skill, skillIndex) => (
+                          <div key={skill} className="text-gray-700 text-sm font-light">
+                            {skill}
+                          </div>
+                        ))}
                       </div>
-                    ))}
-                  </div>
+                    </motion.div>
+                  ))}
                 </div>
               </motion.div>
 
+              {/* Proficiency Statement */}
+              <motion.div variants={itemVariants} className="pt-8 border-t border-gray-200">
+                <div className="bg-gray-50 rounded-none p-8 text-center">
+                  <p className="text-gray-700 font-light text-lg leading-relaxed max-w-4xl mx-auto">
+                    Currently pursuing Computer Engineering studies with focus on practical application 
+                    of programming languages and data science frameworks. Continuously learning and 
+                    expanding technical knowledge through coursework and personal projects.
+                  </p>
+                </div>
+              </motion.div>
+
+              {/* Footer */}
+              <motion.div variants={itemVariants} className="pt-8 text-xs text-gray-400 uppercase tracking-wider">
+                <div className="flex items-center justify-between">
+                  <span>TECHNICAL SKILLS 2025</span>
+                  <span>DAVID M. GEDDAM</span>
+                </div>
+              </motion.div>
             </motion.div>
           </div>
         </motion.div>

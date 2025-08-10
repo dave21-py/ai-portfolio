@@ -9,7 +9,7 @@ interface ExperienceModalProps {
   onClose: () => void;
 }
 
-const experienceData = [
+const experienceData = [ 
   {
     logo: '/forage-logo.png', 
     company: 'Forage',
