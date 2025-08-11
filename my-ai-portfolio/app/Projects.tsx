@@ -1,11 +1,10 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { ArrowLeft, Github, ExternalLink, Cpu, Brain, Code2, Database, Zap, Star, GitBranch, Eye, Users } from 'lucide-react';
+import { ArrowLeft, Github, ExternalLink, X } from 'lucide-react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 
-// --- (Interfaces, projects data, and categories data remain the same) ---
 interface Project {
   id: string;
   title: string;
@@ -37,21 +36,14 @@ const projects: Project[] = [
 ];
 
 const categories = [
-  { id: 'all', label: 'All Projects', icon: <Code2 className="w-4 h-4" /> },
-  { id: 'ai-tools', label: 'AI Tools', icon: <Brain className="w-4 h-4" /> },
-  { id: 'gen-ai', label: 'GenAI', icon: <Zap className="w-4 h-4" /> },
-  { id: 'data-viz', label: 'Data Viz', icon: <Database className="w-4 h-4" /> },
-  { id: 'web-dev', label: 'Web Dev', icon: <Code2 className="w-4 h-4" /> },
-  { id: 'desktop-apps', label: 'Desktop', icon: <Cpu className="w-4 h-4" /> },
-  { id: 'games', label: 'Games', icon: <Star className="w-4 h-4" /> }
+  { id: 'all', label: 'ALL PROJECTS' },
+  { id: 'ai-tools', label: 'AI TOOLS' },
+  { id: 'gen-ai', label: 'GENERATIVE AI' },
+  { id: 'data-viz', label: 'DATA VISUALIZATION' },
+  { id: 'web-dev', label: 'WEB DEVELOPMENT' },
+  { id: 'desktop-apps', label: 'DESKTOP APPLICATIONS' },
+  { id: 'games', label: 'GAMES' }
 ];
-
-const getCategoryColor = (category: string) => {
-    const colors: { [key: string]: string } = {
-        'ai-tools': 'from-emerald-500 to-teal-600', 'gen-ai': 'from-purple-500 to-pink-600', 'web-dev': 'from-blue-500 to-indigo-600', 'data-viz': 'from-orange-500 to-red-600', 'desktop-apps': 'from-gray-500 to-slate-600', 'games': 'from-yellow-500 to-orange-600'
-    };
-    return colors[category] || 'from-gray-500 to-gray-600';
-};
 
 type ProjectsPageProps = {
   onClose: () => void;
@@ -60,8 +52,6 @@ type ProjectsPageProps = {
 export default function ProjectsPage({ onClose }: ProjectsPageProps) {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  // <-- REMOVED: The hoveredProject state is no longer needed.
-  // const [hoveredProject, setHoveredProject] = useState<Project | null>(null);
 
   const filteredProjects = useMemo(() => {
     return selectedCategory === 'all' 
@@ -69,119 +59,399 @@ export default function ProjectsPage({ onClose }: ProjectsPageProps) {
       : projects.filter(p => p.category === selectedCategory);
   }, [selectedCategory]);
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1, 
+      transition: { 
+        staggerChildren: 0.08, 
+        delayChildren: 0.1 
+      } 
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 15 },
+    visible: { opacity: 1, y: 0 }
+  };
+
   if (selectedProject) {
     return (
       <ProjectDetailView 
         project={selectedProject} 
         onBack={() => setSelectedProject(null)}
-        // The main onClose prop is still passed for the "Back to Portfolio" button
         onClose={onClose} 
       />
     );
   }
 
   return (
-    <div className="fixed inset-0 bg-gray-50 z-50 overflow-hidden">
-      {/* Header */}
-      <div className="bg-white border-b border-gray-200 sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 py-8">
-          <div className="flex items-center justify-between">
-            {/* <-- CLEANUP: Changed this button to use the main onClose, matching the detail view's logic --> */}
-            <button onClick={onClose} className="flex items-center gap-3 text-gray-600 hover:text-gray-900 transition-colors"><ArrowLeft className="w-5 h-5" /><span className="font-medium">Back to Portfolio</span></button>
-            <div className="text-right"><h1 className="text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">AI Projects</h1><p className="text-gray-600 mt-1">Building the future, one algorithm at a time</p></div>
-          </div>
-          <div className="flex gap-3 mt-8 overflow-x-auto pb-2">{categories.map(category => (<button key={category.id} onClick={() => setSelectedCategory(category.id)} className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all ${selectedCategory === category.id ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}>{category.icon}{category.label}<span className="bg-white/20 text-xs px-2 py-0.5 rounded-full">{category.id === 'all' ? projects.length : projects.filter(p => p.category === category.id).length}</span></button>))}</div>
-        </div>
-      </div>
+    <div className="fixed inset-0 bg-white z-50 overflow-hidden flex flex-col">
+      {/* Close Button */}
+      <button
+        onClick={onClose}
+        className="absolute top-8 right-8 z-10 text-gray-400 hover:text-gray-600 transition-colors bg-white/80 backdrop-blur-sm rounded-full p-2"
+      >
+        <X className="w-5 h-5" />
+      </button>
 
-      {/* Projects Grid */}
-      <div className="max-w-7xl mx-auto px-6 md:px-12 py-12 overflow-y-auto h-full pb-32">
-        <motion.div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12" layout>
-          <AnimatePresence>
-            {filteredProjects.map((project, index) => (
-              <motion.div
-                key={project.id}
-                layoutId={`project-card-${project.id}`} // Keep layoutId for the animation
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.3, delay: index * 0.1 }}
-                onClick={() => setSelectedProject(project)} // Set selected project on click
-                className="group cursor-pointer" // <-- CLEANUP: onMouseEnter removed
-              >
-                <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-200 hover:shadow-2xl hover:border-gray-300 transition-all duration-500 group-hover:-translate-y-2 group-hover:scale-[1.02]">
-                  <div className="relative h-48 overflow-hidden bg-gray-100"><Image src={project.image} alt={project.title} fill className="object-cover transition-transform duration-500 group-hover:scale-105" /><div className="absolute top-4 left-4"><span className="bg-white/95 backdrop-blur-sm text-gray-900 px-3 py-1 rounded-full text-xs font-medium shadow-sm">{categories.find(c => c.id === project.category)?.label}</span></div><div className="absolute top-4 right-4"><a href={project.githubUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="bg-white/95 backdrop-blur-sm text-gray-900 p-2 rounded-full hover:bg-white transition-all duration-200 shadow-sm hover:shadow-md"><Github className="w-4 h-4" /></a></div><div className="absolute bottom-4 right-4"><span className="bg-black/70 backdrop-blur-sm text-white px-3 py-1 rounded-full text-xs font-medium">{project.year}</span></div></div>
-                  <div className="p-8"><h3 className="text-xl font-bold text-gray-900 mb-2">{project.title}</h3><p className="text-gray-600 text-sm mb-4">{project.subtitle}</p><div className="flex flex-wrap gap-1.5 mb-4">{project.tech.slice(0, 3).map(tech => ( <span key={tech} className="bg-gray-50 text-gray-700 px-3 py-1.5 rounded-lg text-xs font-medium border border-gray-200">{tech}</span>))}{project.tech.length > 3 && (<span className="text-gray-500 text-xs px-2 py-1.5 font-medium">+{project.tech.length - 3} more</span>)}</div>{project.metrics && (<div className="flex items-center gap-4 text-sm text-gray-500">{project.metrics.stars && (<span className="flex items-center gap-1.5"><Star className="w-3.5 h-3.5" />{project.metrics.stars}</span>)}{project.metrics.commits && (<span className="flex items-center gap-1.5"><GitBranch className="w-3.5 h-3.5" />{project.metrics.commits}</span>)}{project.metrics.users && (<span className="flex items-center gap-1.5"><Eye className="w-3.5 h-3.5" />{project.metrics.users}</span>)}</div>)}</div>
-                </div>
-              </motion.div>
-            ))}
-          </AnimatePresence>
+      <div className="flex-1 overflow-y-auto">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="p-12 space-y-12 min-h-full"
+        >
+          {/* Header */}
+          <motion.div variants={itemVariants} className="space-y-8 text-center">
+            <div className="space-y-4">
+              <h1 className="text-4xl font-light tracking-tight text-gray-900 leading-tight">
+                SELECTED PROJECTS
+              </h1>
+              <div className="h-px bg-gray-900 w-32 mx-auto"></div>
+            </div>
+            <p className="text-lg font-light text-gray-600 tracking-wide max-w-2xl mx-auto">
+              BUILDING INNOVATIVE SOLUTIONS + EXPLORING NEW TECHNOLOGIES
+            </p>
+          </motion.div>
+
+          {/* Category Filter */}
+          <motion.div variants={itemVariants} className="space-y-8">
+            <div className="text-center">
+              <h2 className="text-sm font-medium text-gray-500 uppercase tracking-wider mb-6">
+                FILTER BY CATEGORY
+              </h2>
+            </div>
+            <div className="flex flex-wrap justify-center gap-4">
+              {categories.map(category => (
+                <button
+                  key={category.id}
+                  onClick={() => setSelectedCategory(category.id)}
+                  className={`px-6 py-3 text-sm font-light tracking-wide transition-all ${
+                    selectedCategory === category.id 
+                      ? 'bg-gray-900 text-white' 
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  }`}
+                >
+                  {category.label}
+                  <span className="ml-2 text-xs opacity-60">
+                    ({category.id === 'all' ? projects.length : projects.filter(p => p.category === category.id).length})
+                  </span>
+                </button>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Projects Grid */}
+          <motion.div variants={itemVariants} className="space-y-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <AnimatePresence>
+                {filteredProjects.map((project, index) => (
+                  <motion.div
+                    key={project.id}
+                    layoutId={`project-card-${project.id}`}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.3, delay: index * 0.05 }}
+                    onClick={() => setSelectedProject(project)}
+                    className="group cursor-pointer"
+                  >
+                    <div className="space-y-4">
+                      {/* Project Image */}
+                      <div className="relative aspect-[4/3] bg-gray-100 overflow-hidden">
+                        <Image 
+                          src={project.image} 
+                          alt={project.title} 
+                          fill 
+                          className="object-cover transition-transform duration-500 group-hover:scale-105" 
+                        />
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300"></div>
+                        <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          <a 
+                            href={project.githubUrl} 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            onClick={(e) => e.stopPropagation()}
+                            className="bg-white/90 backdrop-blur-sm text-gray-900 p-2 rounded-full hover:bg-white transition-all duration-200"
+                          >
+                            <Github className="w-4 h-4" />
+                          </a>
+                        </div>
+                      </div>
+
+                      {/* Project Info */}
+                      <div className="space-y-3">
+                        <div className="space-y-1">
+                          <h3 className="text-xl font-light text-gray-900 tracking-wide">
+                            {project.title}
+                          </h3>
+                          <p className="text-sm font-light text-gray-600">
+                            {project.subtitle}
+                          </p>
+                        </div>
+
+                        {/* Tech Stack */}
+                        <div className="text-xs font-light text-gray-500 tracking-wide">
+                          {project.tech.slice(0, 3).join(' • ')}
+                          {project.tech.length > 3 && ` • +${project.tech.length - 3} more`}
+                        </div>
+
+                        {/* Year */}
+                        <div className="text-xs font-medium text-gray-400 uppercase tracking-wider">
+                          {project.year}
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </div>
+          </motion.div>
+
+          {/* Footer */}
+          <motion.div variants={itemVariants} className="pt-12 border-t border-gray-200">
+            <div className="text-center">
+              <p className="text-gray-700 font-light text-lg leading-relaxed max-w-4xl mx-auto">
+                Each project represents a commitment to learning, innovation, and technical excellence. 
+                From AI-powered tools to interactive applications, these works demonstrate a progression 
+                in both technical skill and creative problem-solving.
+              </p>
+            </div>
+          </motion.div>
+
+          <motion.div variants={itemVariants} className="pt-8 text-xs text-gray-400 uppercase tracking-wider">
+            <div className="flex items-center justify-between">
+              <span>PROJECT PORTFOLIO 2023-2024</span>
+              <span>DAVID M. GEDDAM</span>
+            </div>
+          </motion.div>
         </motion.div>
       </div>
-
-      {/* <-- REMOVED: The entire AnimatePresence block for the hover card is gone. --> */}
     </div>
   );
 }
 
 function ProjectDetailView({ project, onBack, onClose }: { project: Project; onBack: () => void; onClose: () => void }) {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1, 
+      transition: { 
+        staggerChildren: 0.08, 
+        delayChildren: 0.1 
+      } 
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 15 },
+    visible: { opacity: 1, y: 0 }
+  };
+
   return (
-    <motion.div className="fixed inset-0 bg-white z-50 overflow-y-auto" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
+    <motion.div 
+      className="fixed inset-0 bg-white z-50 overflow-hidden flex flex-col" 
+      initial={{ opacity: 0 }} 
+      animate={{ opacity: 1 }} 
+      exit={{ opacity: 0 }} 
+      transition={{ duration: 0.3 }}
+    >
       {/* Header */}
-      <div className="bg-white/80 backdrop-blur-lg border-b border-gray-200 sticky top-0 z-40">
-        <div className="max-w-5xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <button onClick={onBack} className="flex items-center gap-3 text-gray-600 hover:text-gray-900 transition-colors"><ArrowLeft className="w-5 h-5" /><span className="font-medium">Back to Projects</span></button>
-            {/* <-- REMOVED: The 'X' close button is gone, as requested. --> */}
-            <button onClick={onClose} className="text-gray-400 hover:text-gray-600 transition-colors p-2 rounded-full">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-            </button>
-          </div>
+      <div className="border-b border-gray-200 p-8 flex-shrink-0">
+        <div className="max-w-6xl mx-auto flex items-center justify-between">
+          <button 
+            onClick={onBack} 
+            className="flex items-center gap-3 text-gray-600 hover:text-gray-900 transition-colors"
+          >
+            <ArrowLeft className="w-5 h-5" />
+            <span className="font-light tracking-wide">BACK TO PROJECTS</span>
+          </button>
+          <button
+            onClick={onClose}
+            className="text-gray-400 hover:text-gray-600 transition-colors p-2 rounded-full"
+          >
+            <X className="w-5 h-5" />
+          </button>
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="max-w-5xl mx-auto px-6 py-12">
-        {/* Project Hero */}
-        <motion.div className="mb-12" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
-          <div className="md:flex items-center justify-between mb-6">
-            <div className="mb-4 md:mb-0">
-              <h1 className="text-5xl font-bold text-gray-900 mb-2">{project.title}</h1>
-              <p className="text-xl text-gray-600">{project.subtitle}</p>
-            </div>
-            <div className="flex gap-3 flex-shrink-0">
-              <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-gray-900 text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-all shadow-sm hover:shadow-md"><Github className="w-4 h-4" />View Code</a>
-              {project.demoUrl && (<a href={project.demoUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-all shadow-sm hover:shadow-md"><ExternalLink className="w-4 h-4" />Live Demo</a>)}
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Project Image with shared layout animation */}
-        <motion.div className="relative h-[500px] rounded-2xl overflow-hidden mb-12 shadow-2xl bg-gradient-to-br from-gray-50 to-gray-200" layoutId={`project-card-${project.id}`}>
-          <Image src={project.image} alt={project.title} fill className="object-contain p-8" priority />
-        </motion.div>
-
-        {/* Project Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-12 gap-y-8">
-          <motion.div className="lg:col-span-2 space-y-8" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }}>
-            <div><h2 className="text-2xl font-bold text-gray-900 mb-4 border-b pb-2">Project Overview</h2><p className="text-gray-600 text-lg leading-relaxed">{project.description}</p></div>
-            <div className="bg-green-50/80 border border-green-200/80 rounded-xl p-6 shadow-sm"><h3 className="text-lg font-semibold text-green-900 mb-2">Impact & Results</h3><p className="text-green-800">{project.impact}</p></div>
-            <div><h2 className="text-2xl font-bold text-gray-900 mb-4 border-b pb-2">Key Features</h2><ul className="space-y-3">{project.features.map((feature, index) => (<li key={index} className="flex items-start gap-3"><div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1"><div className="w-2 h-2 bg-blue-600 rounded-full" /></div><span className="text-gray-700">{feature}</span></li>))}</ul></div>
-          </motion.div>
-          <motion.div className="space-y-8" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.4 }}>
-            <div className="bg-white border rounded-xl p-6 shadow-sm">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Project Info</h3>
-              <div className="space-y-3 text-sm">
-                <div className="flex justify-between"><span className="text-gray-500">Category:</span><span className="font-medium text-gray-800">{categories.find(c => c.id === project.category)?.label}</span></div>
-                <div className="flex justify-between"><span className="text-gray-500">Year:</span><span className="font-medium text-gray-800">{project.year}</span></div>
-                <div className="flex justify-between"><span className="text-gray-500">Team:</span><span className="font-medium text-gray-800">{project.teamSize}</span></div>
-                <div className="flex justify-between"><span className="text-gray-500">Duration:</span><span className="font-medium text-gray-800">{project.duration}</span></div>
+      {/* Content */}
+      <div className="flex-1 overflow-y-auto">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="max-w-6xl mx-auto p-12 space-y-12"
+        >
+          {/* Project Header */}
+          <motion.div variants={itemVariants} className="space-y-6">
+            <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+              <div className="space-y-2">
+                <h1 className="text-4xl font-light tracking-tight text-gray-900 leading-tight">
+                  {project.title}
+                </h1>
+                <p className="text-xl font-light text-gray-600 tracking-wide">
+                  {project.subtitle}
+                </p>
+              </div>
+              <div className="flex gap-3 flex-shrink-0">
+                <a 
+                  href={project.githubUrl} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="inline-flex items-center gap-2 bg-gray-900 text-white px-6 py-3 font-light tracking-wide hover:bg-gray-800 transition-all"
+                >
+                  <Github className="w-4 h-4" />
+                  VIEW CODE
+                </a>
+                {project.demoUrl && (
+                  <a 
+                    href={project.demoUrl} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="inline-flex items-center gap-2 border border-gray-300 text-gray-700 px-6 py-3 font-light tracking-wide hover:bg-gray-50 transition-all"
+                  >
+                    <ExternalLink className="w-4 h-4" />
+                    LIVE DEMO
+                  </a>
+                )}
               </div>
             </div>
-            <div className="bg-white border rounded-xl p-6 shadow-sm"><h3 className="text-lg font-semibold text-gray-900 mb-4">Tech Stack</h3><div className="flex flex-wrap gap-2">{project.tech.map(tech => (<span key={tech} className="bg-gray-100 text-gray-800 px-3 py-1.5 rounded-lg text-xs font-medium border">{tech}</span>))}</div></div>
-            {project.metrics && (<div className="bg-white border rounded-xl p-6 shadow-sm"><h3 className="text-lg font-semibold text-gray-900 mb-4">Project Stats</h3><div className="space-y-3 text-sm">{project.metrics.stars && (<div className="flex items-center justify-between"><span className="flex items-center gap-2 text-gray-600"><Star className="w-4 h-4" /> GitHub Stars</span><span className="font-semibold">{project.metrics.stars}</span></div>)}{project.metrics.commits && (<div className="flex items-center justify-between"><span className="flex items-center gap-2 text-gray-600"><GitBranch className="w-4 h-4" /> Commits</span><span className="font-semibold">{project.metrics.commits}</span></div>)}{project.metrics.users && (<div className="flex items-center justify-between"><span className="flex items-center gap-2 text-gray-600"><Users className="w-4 h-4" /> Users</span><span className="font-semibold">{project.metrics.users}</span></div>)}</div></div>)}
           </motion.div>
-        </div>
+
+          {/* Project Image */}
+          <motion.div 
+            variants={itemVariants}
+            className="relative aspect-[16/10] bg-gray-100 overflow-hidden"
+            layoutId={`project-card-${project.id}`}
+          >
+            <Image 
+              src={project.image} 
+              alt={project.title} 
+              fill 
+              className="object-contain p-8" 
+              priority 
+            />
+          </motion.div>
+
+          {/* Project Content */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            {/* Main Content */}
+            <motion.div variants={itemVariants} className="lg:col-span-2 space-y-8">
+              <div className="space-y-4">
+                <h2 className="text-xl font-medium text-gray-900 tracking-wide pb-2 border-b border-gray-200">
+                  PROJECT OVERVIEW
+                </h2>
+                <p className="text-gray-700 font-light leading-relaxed text-lg">
+                  {project.description}
+                </p>
+              </div>
+
+              <div className="bg-gray-50 p-8 space-y-2">
+                <h3 className="text-lg font-medium text-gray-900">
+                  IMPACT & RESULTS
+                </h3>
+                <p className="text-gray-700 font-light leading-relaxed">
+                  {project.impact}
+                </p>
+              </div>
+
+              <div className="space-y-4">
+                <h2 className="text-xl font-medium text-gray-900 tracking-wide pb-2 border-b border-gray-200">
+                  KEY FEATURES
+                </h2>
+                <div className="space-y-3">
+                  {project.features.map((feature, index) => (
+                    <div key={index} className="flex items-start gap-4">
+                      <div className="w-1 h-1 bg-gray-400 rounded-full mt-3 flex-shrink-0"></div>
+                      <p className="text-gray-700 font-light leading-relaxed">
+                        {feature}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Sidebar */}
+            <motion.div variants={itemVariants} className="space-y-8">
+              {/* Project Details */}
+              <div className="bg-gray-50 p-6 space-y-6">
+                <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wider">
+                  PROJECT DETAILS
+                </h3>
+                <div className="space-y-4 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-gray-500 font-light">Category:</span>
+                    <span className="font-medium text-gray-800">
+                      {categories.find(c => c.id === project.category)?.label}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-500 font-light">Year:</span>
+                    <span className="font-medium text-gray-800">{project.year}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-500 font-light">Team:</span>
+                    <span className="font-medium text-gray-800">{project.teamSize}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-500 font-light">Duration:</span>
+                    <span className="font-medium text-gray-800">{project.duration}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Technology Stack */}
+              <div className="bg-gray-50 p-6 space-y-4">
+                <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wider">
+                  TECHNOLOGY STACK
+                </h3>
+                <div className="text-gray-700 font-light leading-relaxed text-sm">
+                  {project.tech.join(' • ')}
+                </div>
+              </div>
+
+              {/* Project Metrics */}
+              {project.metrics && (
+                <div className="bg-gray-50 p-6 space-y-4">
+                  <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wider">
+                    PROJECT METRICS
+                  </h3>
+                  <div className="space-y-3 text-sm">
+                    {project.metrics.stars && (
+                      <div className="flex justify-between">
+                        <span className="text-gray-500 font-light">GitHub Stars:</span>
+                        <span className="font-medium text-gray-800">{project.metrics.stars}</span>
+                      </div>
+                    )}
+                    {project.metrics.commits && (
+                      <div className="flex justify-between">
+                        <span className="text-gray-500 font-light">Commits:</span>
+                        <span className="font-medium text-gray-800">{project.metrics.commits}</span>
+                      </div>
+                    )}
+                    {project.metrics.users && (
+                      <div className="flex justify-between">
+                        <span className="text-gray-500 font-light">Users:</span>
+                        <span className="font-medium text-gray-800">{project.metrics.users}</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+            </motion.div>
+          </div>
+
+          {/* Footer */}
+          <motion.div variants={itemVariants} className="pt-8 text-xs text-gray-400 uppercase tracking-wider">
+            <div className="flex items-center justify-between">
+              <span>PROJECT DETAILS</span>
+              <span>DAVID M. GEDDAM</span>
+            </div>
+          </motion.div>
+        </motion.div>
       </div>
     </motion.div>
   );

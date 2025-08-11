@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { X, Award, ExternalLink, Calendar, Building, Filter, Zap, Brain, Code, Database } from 'lucide-react';
+import { X, ExternalLink, Calendar } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 
@@ -17,6 +17,7 @@ interface Certificate {
 }
 
 const certificates: Certificate[] = [
+  { title: 'Google AI Essentials', issuer: 'Google & Coursera', image: '/google.png', link: 'https://www.coursera.org/account/accomplishments/certificate/DW89ZFOTCRO6', category: 'ai-ml', date: 'August 2025', type: 'Professional', skills: ['AI']},
   { title: 'Advanced Software Engineering', issuer: 'Walmart Global Tech', image: '/walmart.png', link: 'https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/prBZoAihniNijyD6d/oX6f9BbCL9kJDJzfg_prBZoAihniNijyD6d_z4onoAb2QCEfZEHx8_1752722156254_completion_certificate.pdf', category: 'software-dev', date: 'July 2025', type: 'Professional', skills: ['Software Architecture', 'Python'] },
   { title: 'Claude Code in Action', issuer: 'Anthropic', image: '/claude.png', link: 'https://verify.skilljar.com/c/5qxd6z4f8xxr', category: 'ai-ml', date: 'July 2025', type: 'Professional', skills: ['Prompt Engineering', 'Claude Code', 'GenAI'] },
   { title: 'Foundations of Prompt Engineering', issuer: 'Amazon Web Services', image: '/aws.png', link: 'https://www.linkedin.com/in/david-geddam/details/certifications/1752094064398/single-media-viewer/?profileId=ACoAAFaSGCgBNTN2LtzaK1e7-hh1rXGUZSc2Ujg', category: 'ai-ml', date: 'Jan 2025', type: 'Professional', skills: ['Prompt Engineering', 'AWS', 'AI Models', 'GenAI'] },
@@ -25,15 +26,16 @@ const certificates: Certificate[] = [
   { title: 'Technology Consulting', issuer: 'Deloitte, Forage', image: '/tech.png', link: 'https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/9PBTqmSxAf6zZTseP/udmxiyHeqYQLkTPvf_9PBTqmSxAf6zZTseP_z4onoAb2QCEfZEHx8_1751348369223_completion_certificate.pdf', category: 'general', date: 'Jan 2025', type: 'Professional', skills: ['Tech Consulting', 'Business Strategy', 'Digital Transformation'] },
   { title: 'Complete Prompt Engineering for AI Bootcamp', issuer: 'Udemy', image: '/udemy.png', link: 'https://www.udemy.com/certificate/UC-80dfcdf5-7165-4aef-a373-acdc03fadea3/', category: 'ai-ml', date: 'Dec 2024', type: 'Bootcamp', skills: ['Prompt Engineering', 'AI Optimization', 'Language Models'] },
   { title: 'Audio Visual Associate', issuer: 'Extron', image: '/extron.png', link: 'https://www.udemy.com/certificate/UC-80dfcdf5-7165-4aef-a373-acdc03fadea3/', category: 'hardware', date: 'Nov 2024', type: 'Certification', skills: ['AV Systems', 'Hardware Config', 'System Integration'] },
-  { title: 'AI Python for Beginners', issuer: 'DeepLearning.ai', image: '/aipython.png', link: 'https://www.udemy.com/certificate/UC-80dfcdf5-7165-4aef-a373-acdc03fadea3/', category: 'ai-ml', date: 'Oct 2024', type: 'Course', skills: ['Python', 'AI Programming', 'Machine Learning'] }
+  { title: 'AI Python for Beginners', issuer: 'DeepLearning.ai', image: '/aipython.png', link: 'https://www.udemy.com/certificate/UC-80dfcdf5-7165-4aef-a373-acdc03fadea3/', category: 'ai-ml', date: 'Oct 2024', type: 'Course', skills: ['Python', 'AI Programming', 'Machine Learning'] },
+  { title: 'E3PT Certified', issuer: 'English3', image: '/e3pt.png', link: 'https://elearn.english3.com/resource/?type=pdf&src=/public/useruploads/certificate__16857333561634224-1326.pdf', category: 'general', date: 'Jun 2023', type: 'Professional', skills: ['English']}
 ];
 
 const categories = [
-  { id: 'all', label: 'All', icon: <Award size={14} /> },
-  { id: 'ai-ml', label: 'AI & ML', icon: <Brain size={14} /> },
-  { id: 'software-dev', label: 'Software Dev', icon: <Code size={14} /> },
-  { id: 'hardware', label: 'Hardware', icon: <Zap size={14} /> },
-  { id: 'general', label: 'General', icon: <Building size={14} /> }
+  { id: 'all', label: 'ALL CERTIFICATIONS' },
+  { id: 'ai-ml', label: 'AI & MACHINE LEARNING' },
+  { id: 'software-dev', label: 'SOFTWARE DEVELOPMENT' },
+  { id: 'hardware', label: 'HARDWARE & SYSTEMS' },
+  { id: 'general', label: 'GENERAL SKILLS' }
 ];
 
 type CertificateModalProps = {
@@ -49,110 +51,177 @@ export default function CertificateModal({ onClose }: CertificateModalProps) {
 
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.05, delayChildren: 0.1 } }
+    visible: { 
+      opacity: 1, 
+      transition: { 
+        staggerChildren: 0.08, 
+        delayChildren: 0.1 
+      } 
+    }
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 15 },
     visible: { opacity: 1, y: 0 }
   };
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0" onClick={onClose} />
+      <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <motion.div 
+          initial={{ opacity: 0 }} 
+          animate={{ opacity: 1 }} 
+          exit={{ opacity: 0 }} 
+          className="absolute inset-0" 
+          onClick={onClose} 
+        />
         
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.95 }}
+          initial={{ opacity: 0, scale: 0.96, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.96, y: 20 }}
           transition={{ type: "spring", stiffness: 400, damping: 40 }}
-          className="relative bg-gray-50 rounded-3xl shadow-2xl max-w-6xl w-full max-h-[90vh] overflow-hidden flex flex-col"
+          className="relative bg-white rounded-none shadow-2xl max-w-6xl w-full h-[95vh] overflow-hidden flex flex-col"
           onClick={(e) => e.stopPropagation()}
         >
-          {/* Header */}
-          <div className="bg-white/80 backdrop-blur-lg border-b border-gray-200 p-8 flex-shrink-0 text-center">
-            <button onClick={onClose} className="absolute top-6 right-6 p-2 rounded-full text-gray-500 hover:bg-gray-100 hover:text-gray-800 transition-all z-10"><X className="w-5 h-5" /></button>
-            <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
-              <div className="inline-block p-4 bg-yellow-100/50 rounded-2xl mb-4">
-                <Award className="w-10 h-10 text-yellow-600" />
-              </div>
-              <h1 className="text-5xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent mb-2">Certifications</h1>
-              <p className="text-lg text-gray-600">A showcase of continuous learning and professional development.</p>
-            </motion.div>
-          </div>
+          {/* Close Button */}
+          <button
+            onClick={onClose}
+            className="absolute top-8 right-8 z-10 text-gray-400 hover:text-gray-600 transition-colors bg-white/80 backdrop-blur-sm rounded-full p-2"
+          >
+            <X className="w-5 h-5" />
+          </button>
 
-          {/* Scrollable Content */}
-          <div className="p-8 overflow-y-auto">
-            <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-8">
-              
-              {/* Filters */}
-              <motion.div variants={itemVariants} className="flex justify-center gap-3">
-                {categories.map(category => (
-                  <button
-                    key={category.id}
-                    onClick={() => setSelectedCategory(category.id)}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all ${
-                      selectedCategory === category.id
-                        ? 'bg-gray-900 text-white'
-                        : 'bg-white text-gray-600 hover:bg-gray-100 border'
-                    }`}
-                  >
-                    {category.icon}
-                    {category.label}
-                    <span className={`text-xs px-2 py-0.5 rounded-full ${selectedCategory === category.id ? 'bg-white/20' : 'bg-gray-100'}`}>
-                      {category.id === 'all' ? certificates.length : certificates.filter(c => c.category === category.id).length}
-                    </span>
-                  </button>
-                ))}
+          <div className="flex-1 overflow-y-auto">
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              className="p-12 space-y-12 min-h-full"
+            >
+              {/* Header */}
+              <motion.div variants={itemVariants} className="space-y-4 text-center">
+                <div className="space-y-1">
+                  <h1 className="text-4xl font-light tracking-tight text-gray-900 leading-tight">
+                    PROFESSIONAL CERTIFICATIONS
+                  </h1>
+                  <div className="h-px bg-gray-900 w-40 mx-auto"></div>
+                </div>
+                <p className="text-lg font-light text-gray-600 tracking-wide max-w-2xl mx-auto">
+                  CONTINUOUS LEARNING + PROFESSIONAL DEVELOPMENT
+                </p>
               </motion.div>
 
-              {/* Certificate Grid */}
-              <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <AnimatePresence>
-                  {filteredCertificates.map((cert) => (
-                    <motion.a
-                      key={cert.title}
-                      href={cert.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      layout
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.8 }}
-                      transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-                      className="group block bg-white border border-gray-200 rounded-2xl p-5 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+              {/* Category Filter */}
+              <motion.div variants={itemVariants} className="space-y-8">
+                <div className="text-center">
+                  <h2 className="text-sm font-medium text-gray-500 uppercase tracking-wider mb-6">
+                    FILTER BY CATEGORY
+                  </h2>
+                </div>
+                <div className="flex flex-wrap justify-center gap-4">
+                  {categories.map(category => (
+                    <button
+                      key={category.id}
+                      onClick={() => setSelectedCategory(category.id)}
+                      className={`px-6 py-3 text-sm font-light tracking-wide transition-all ${
+                        selectedCategory === category.id 
+                          ? 'bg-gray-900 text-white' 
+                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                      }`}
                     >
-                      {/* Card Header */}
-                      <div className="flex items-start gap-4 mb-3">
-                        <div className="w-12 h-12 rounded-lg bg-gray-100 p-2 flex items-center justify-center flex-shrink-0">
-                          <Image src={cert.image} alt={cert.title} width={40} height={40} className="object-contain" />
-                        </div>
-                        <div className="flex-1">
-                          <h3 className="font-bold text-gray-900 leading-tight group-hover:text-blue-600 transition-colors">{cert.title}</h3>
-                          <p className="text-sm text-gray-500">{cert.issuer}</p>
-                        </div>
-                        <ExternalLink size={16} className="text-gray-300 group-hover:text-gray-500 transition-colors flex-shrink-0 mt-1" />
-                      </div>
-
-                      {/* Skills */}
-                      <div className="flex flex-wrap gap-1.5 mb-4">
-                        {cert.skills.map(skill => (
-                          <span key={skill} className="bg-gray-100 text-gray-700 text-xs font-medium px-2 py-1 rounded-md">{skill}</span>
-                        ))}
-                      </div>
-
-                      {/* Card Footer */}
-                      <div className="flex justify-between items-center text-xs text-gray-500 border-t border-gray-100 pt-3">
-                        <span className="font-semibold bg-blue-50 text-blue-700 px-2 py-1 rounded-md">{cert.type}</span>
-                        <div className="flex items-center gap-1">
-                          <Calendar size={12} />
-                          <span>{cert.date}</span>
-                        </div>
-                      </div>
-                    </motion.a>
+                      {category.label}
+                      <span className="ml-2 text-xs opacity-60">
+                        ({category.id === 'all' ? certificates.length : certificates.filter(c => c.category === category.id).length})
+                      </span>
+                    </button>
                   ))}
-                </AnimatePresence>
+                </div>
+              </motion.div>
+
+              {/* Certificates Grid */}
+              <motion.div variants={itemVariants} className="space-y-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  <AnimatePresence>
+                    {filteredCertificates.map((cert, index) => (
+                      <motion.a
+                        key={cert.title}
+                        href={cert.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        layout
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        transition={{ duration: 0.3, delay: index * 0.05 }}
+                        className="group block space-y-4"
+                      >
+                        {/* Certificate Image */}
+                        <div className="relative aspect-[4/3] bg-gray-100 overflow-hidden">
+                          <Image 
+                            src={cert.image} 
+                            alt={cert.title} 
+                            fill 
+                            className="object-contain p-8 transition-transform duration-500 group-hover:scale-105" 
+                          />
+                          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-all duration-300"></div>
+                          <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <div className="bg-white/90 backdrop-blur-sm text-gray-900 p-2 rounded-full">
+                              <ExternalLink className="w-4 h-4" />
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Certificate Info */}
+                        <div className="space-y-3">
+                          <div className="space-y-1">
+                            <h3 className="text-lg font-light text-gray-900 tracking-wide group-hover:text-gray-600 transition-colors">
+                              {cert.title}
+                            </h3>
+                            <p className="text-sm font-light text-gray-600">
+                              {cert.issuer}
+                            </p>
+                          </div>
+
+                          {/* Skills */}
+                          <div className="text-xs font-light text-gray-500 tracking-wide">
+                            {cert.skills.join(' • ')}
+                          </div>
+
+                          {/* Date and Type */}
+                          <div className="flex items-center justify-between text-xs">
+                            <span className="font-medium text-gray-400 uppercase tracking-wider">
+                              {cert.type}
+                            </span>
+                            <div className="flex items-center gap-1 text-gray-500">
+                              <Calendar className="w-3 h-3" />
+                              <span className="font-light">{cert.date}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </motion.a>
+                    ))}
+                  </AnimatePresence>
+                </div>
+              </motion.div>
+
+              {/* Professional Statement */}
+              <motion.div variants={itemVariants} className="pt-8 border-t border-gray-200">
+                <div className="bg-gray-50 rounded-none p-8 text-center">
+                  <p className="text-gray-700 font-light text-lg leading-relaxed max-w-4xl mx-auto">
+                    These certifications represent a commitment to continuous learning and staying current 
+                    with evolving technologies. Each credential demonstrates practical knowledge and skills 
+                    acquired through rigorous training programs and professional development initiatives.
+                  </p>
+                </div>
+              </motion.div>
+
+              {/* Footer */}
+              <motion.div variants={itemVariants} className="pt-8 text-xs text-gray-400 uppercase tracking-wider">
+                <div className="flex items-center justify-between">
+                  <span>PROFESSIONAL CREDENTIALS 2023-2025</span>
+                  <span>DAVID M. GEDDAM</span>
+                </div>
               </motion.div>
             </motion.div>
           </div>
