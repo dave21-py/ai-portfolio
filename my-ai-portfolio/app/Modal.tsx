@@ -71,7 +71,7 @@ const AboutModal = ({ onClose }: AboutModalProps) => {
                       alt="David M. Geddam"
                       width={320}
                       height={384}
-                      className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
+                      className="w-full h-full object-cover hover:grayscale transition-all duration-500"
                     />
                   </div>
                 </motion.div>
